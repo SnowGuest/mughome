@@ -1,0 +1,40 @@
+{
+    "global": {
+        "webSiteTitle": "鹤梦云视频管理平台",
+        "confirm":"确认",
+        "cancel":"取消",
+        "router": {},
+        "days":["一","二","三","四","五","六","日"],
+        "week":"星期",
+        "everyday":"每天",
+        "week2":["周日","周一","周二","周三","周四","周五","周六"],
+        "please-input":"请输入"
+    },
+    "header":["实时视频","设备管理","告警中心","系统设置","相册管理","账户管理"],
+    "navBar":{
+        "userMenu":["账号信息","修改密码","退出"],
+        "menu": "菜单"
+    },
+    "login": {
+        "formTitle": "欢迎登录",
+        "formTabTitle": {
+            "tab1": "密码登录",
+            "tab2": "验证码登录"
+        },
+        "form": {
+            "rememberPassword": "记住密码",
+            "submitBtn": "登录",
+            "forgePassword": "忘记密码?",
+            "input": {
+                "account": "请输入手机号或邮箱",
+                "password": "请输入密码"
+            },
+            "clause": {
+                "text1": "我已阅读并同意",
+                "text2": "和",
+                "text3": "鹤梦用户协议",
+                "text4": "鹤梦隐私政策"
+            }
+        }
+    }
+}
