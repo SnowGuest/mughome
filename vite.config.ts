@@ -27,7 +27,9 @@ export default defineConfig({
     Components({
       dts: "./types/components.d.ts",
       resolvers: [
-        AntDesignVueResolver(),
+        AntDesignVueResolver({
+          importStyle: false,
+        }),
       ],
     })
   ],

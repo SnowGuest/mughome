@@ -1,10 +1,14 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
-    "types/env.d.ts",
     "src/**/*.vue",
+    "src/**/*.ts",
     "src/**/*.json",
-    "types/*.d.ts",
+    "types/env.d.ts",
+    "types/globa.d.ts",
+    "types/user.d.ts",
+    "types/auto-imports.d.ts",
+    "types/components.d.ts",
   ],
   "compilerOptions": {
     "jsxImportSource": "vue",

@@ -1,18 +1,16 @@
 import { type Ref, ref } from "vue";
-import { LocationQueryRaw, useRoute, useRouter } from 'vue-router'
+import { type LocationQueryRaw, useRoute, useRouter } from 'vue-router'
 
 import localforage from "localforage";
 import { useAppStore } from "../stores/app";
 import { getAllLanguageKey } from "../lang";
 // import browser from "browser-tool";
 import { nextTick } from "vue";
-// import type { LangEnmu, LangEnmuSelect, Setting } from "@/types/globa";
-// import { Token, User } from "@/types/user";
 // 在App.vue校验是否存在用户个人信息
 export function preloadAppConf() {
-    
+
     const showView = ref(false);
-    const router = useRouter();
+    // const router = useRouter();
     const route = useRoute();
     const appStore = useAppStore();
     const languageKeys = getAllLanguageKey()
@@ -52,10 +50,10 @@ export function preloadAppConf() {
         //         redirect: route.path === '/' ? route.path :
         //     }
         // }
-        router.replace({
-            name: "login",
-            // query
-        })
+        // router.replace({
+        //     name: "login",
+        //     // query
+        // })
     }).finally(() => {
         showView.value = true
     })

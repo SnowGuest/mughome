@@ -1,14 +1,11 @@
-type LangEnmu = "zh-cn" | "en";
-type LangEnmuSelect = LangEnmu | "auto"
-
-interface Setting {
-
-}
 
 declare global {
-    const LangEnmu: LangEnmu;
-    const LangEnmuSelect: LangEnmu | "auto";
-    const Setting: Setting
-}
+    type LangEnmu = "zh-cn" | "en";
+    type LangEnmuSelect = LangEnmu | "auto"
 
-export { }
+    interface Setting {
+
+    }
+
+}
+export { } 

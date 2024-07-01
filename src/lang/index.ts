@@ -1,4 +1,3 @@
-import { LangEnmu } from "@/types/globa";
 
 
 export function getAllLanguage(): Record<LangEnmu, any> {

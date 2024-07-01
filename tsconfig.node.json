@@ -4,13 +4,13 @@
     "vite.config.*",
     "nightwatch.conf.*",
     "playwright.config.*",
-    "types/*.d.ts",
+    "types/**/*.ts",
   ],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "module": "ESNext",
+    "module": "NodeNext",
     "types": [
       "node"
     ]
