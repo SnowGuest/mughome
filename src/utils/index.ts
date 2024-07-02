@@ -82,3 +82,7 @@ export function getUserSystemLanguage(): LangEnmu {
     // 非中国区用户就会匹配到 en
     return languageKey.includes(userSystemLanguage) ? userSystemLanguage : "en"
 }
+
+export function requestError2Message(){
+
+}

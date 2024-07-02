@@ -17,5 +17,10 @@ declare global {
         changeSideBar: (bool: LayoutProvide['open']) => void
         showloginMode: () => void
     }
+    export interface InstanceBody<T = null> {
+        code: number,
+        message: string,
+        data: T
+    }
 }
 export { } 

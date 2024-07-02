@@ -17,10 +17,10 @@ function submit(){
             <h3 class="sub-title">希望你喜欢音柚窝</h3>
             <a-form :model="formState" @submit="submit">
                 <a-form-item>
-                    <a-input v-model="formState.account" placeholder="用户名/邮箱"></a-input>
+                    <a-input v-model:value="formState.account" placeholder="用户名/邮箱"></a-input>
                 </a-form-item>
                 <a-form-item>
-                    <a-input v-model="formState.password" type="password" placeholder="密码"></a-input>
+                    <a-input v-model:value="formState.password" type="password" placeholder="密码"></a-input>
                 </a-form-item>
                 <div>
                     未登录手机号验证后将自动注册登录， 注册即表明你已同意用户协议和隐私政策

@@ -34,7 +34,10 @@ export default defineConfig({
     })
   ],
   server: {
-    host: true
+    host: true,
+    proxy: {
+      '/proxy': 'https://api.mughome.top/community/v0/',
+    }
   },
   css: {
     postcss: {
@@ -48,5 +51,6 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+
 })
