@@ -20,7 +20,7 @@ const tab: Tab[] = [{
 
 <template>
     <ul class="menu">
-        <menuItem v-for="item in tab" :tab="item" v-once>
+        <menuItem v-for="item in tab" :tab="item" >
         </menuItem>
     </ul>
 </template>

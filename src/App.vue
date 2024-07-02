@@ -3,6 +3,7 @@ import { preloadAppConf } from './utils/index';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import enUS from 'ant-design-vue/es/locale/en_US';
 import { useAppStore } from './stores/app';
+import type { Locale } from 'ant-design-vue/es/locale';
 const appStore = useAppStore();
 
 // 在这里管理全局动态变量
@@ -12,11 +13,11 @@ const app = reactive({
 provide("app", app)
 
 const { showView } = preloadAppConf()
-const dayjsKv = {
+const dayjsKv: Record<LangEnmu, Locale> = {
     "zh-cn": zhCN,
     "en": enUS
 }
-const locale = computed(e => { dayjsKv[appStore.language] })
+const locale = computed<Locale>(e => dayjsKv[appStore.language])
 </script>
 
 <template>
@@ -24,4 +25,3 @@ const locale = computed(e => { dayjsKv[appStore.language] })
         <router-view></router-view>
     </a-config-provider>
 </template>
-
