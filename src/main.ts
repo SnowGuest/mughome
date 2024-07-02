@@ -1,7 +1,8 @@
 import 'normalize.css'
 import 'md-editor-v3/lib/style.css';
 import './assets/main.css'
-import 'virtual:uno.css'
+import 'virtual:uno.css';
+import "bootstrap-icons/font/bootstrap-icons.min.css";
 import { createI18n } from 'vue-i18n'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

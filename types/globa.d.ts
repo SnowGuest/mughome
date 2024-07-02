@@ -6,6 +6,11 @@ declare global {
     interface Setting {
 
     }
-
+    interface Tab {
+        path?: string;
+        label?: string;
+        icon?: string
+        type?: "ground" | "line"
+    }
 }
 export { } 
