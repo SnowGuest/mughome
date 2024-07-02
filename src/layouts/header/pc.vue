@@ -1,14 +1,23 @@
 <!--  -->
 <script lang="ts" setup>
+const layout = inject<LayoutProvide>("layout")
 const searchValue = ref("")
 function onSearch() {
+}
 
+function changeSideBar() {
+    console.log(layout?.open)
+    if (layout?.open === "opened") {
+        layout?.changeSideBar("small")
+    } else if (layout?.open === "small") {
+        layout?.changeSideBar("opened")
+    }
 }
 </script>
 
 <template>
     <div class="pcHeader flex items-center">
-        <div class="collectMenu flex-center">
+        <div class="collectMenu flex-center" @click="changeSideBar">
             <i class="bi bi-list"></i>
         </div>
         <div class="flex items-center search">
@@ -26,7 +35,7 @@ function onSearch() {
             </template>
             <a-avatar>
                 <template #icon>
-                    <UserOutlined />
+                    <!-- <UserOutlined /> -->
                 </template>
             </a-avatar>
         </a-popover>
@@ -47,6 +56,14 @@ function onSearch() {
     color: #ffffff;
     padding: 0 20px;
     margin-right: 14px;
+}
+
+/* pad长度 */
+@media screen and (max-width: 1280px) {
+
+    .collectMenu {
+        display: none;
+    }
 }
 
 .pcHeader {

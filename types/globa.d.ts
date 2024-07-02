@@ -13,8 +13,8 @@ declare global {
         type?: "ground" | "line"
     }
     interface LayoutProvide {
-        open: boolean;
-        changeSideBar: (bool: boolean) => void
+        open: "small" | "opened" | "close" | "fullscreen";
+        changeSideBar: (bool: LayoutProvide['open']) => void
     }
 }
 export { } 

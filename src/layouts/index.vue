@@ -2,12 +2,28 @@
 <script lang="ts" setup>
 import sideBar from './sideBar.vue';
 import MugHeader from './header/mugHeader.vue';
+
 const layout = reactive<LayoutProvide>({
-    open: false,
-    changeSideBar(bool) {
-        layout.open = bool;
+    open: "opened",
+    changeSideBar(mode) {
+        layout.open = mode;
     }
 })
+const sideBarWidth = computed(e => {
+    if (layout.open === "close") return 0
+    if (layout.open === "fullscreen") return 100
+    if (layout.open === "small") return 75
+    if (layout.open === "opened") return 210
+    return 0
+})
+const sideBarWidthRender = computed(_ => `${sideBarWidth.value}${sideBarWidth.value === 100 ? "vw" : "px"}`)
+const mql = window.matchMedia("(max-width:768px)");
+const mql2 = window.matchMedia("(max-width:1280px) and (min-width:768px)");
+console.log(mql.matches, mql2.matches)
+if (mql.matches) layout.open = "close"
+if (mql2.matches) layout.open = "small"
+mql.addEventListener("change", e => { if (e.matches) layout.open = "close" })
+mql2.addEventListener("change", e => { if (e.matches) layout.open = "small" })
 provide<LayoutProvide>("layout", layout)
 </script>
 
@@ -26,24 +42,15 @@ provide<LayoutProvide>("layout", layout)
     max-height: 100%;
     width: 100%;
     height: 100%;
-    --side-bar-width: 210px;
+    --side-bar-width: v-bind(sideBarWidthRender);
 }
 
 
 
-/* pad长度 */
-@media screen and (max-width: 1280px) {
-
-    .mughome {
-        --side-bar-width: 75px;
-    }
-}
-
-/* 移动端 */
 @media screen and (max-width: 768px) {
 
-    .mughome {
-        --side-bar-width: 0px;
+    .main {
+       margin-left: 0 !important;
     }
 }
 
@@ -53,6 +60,6 @@ provide<LayoutProvide>("layout", layout)
     width: 100%;
     margin-left: var(--side-bar-width);
     height: 100%;
-    background-color: #F7F7F8;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 </style>

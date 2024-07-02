@@ -8,13 +8,22 @@ const props = defineProps<{
 }>()
 function toPage() {
     if (props.tab.path) router.push(props.tab.path);
-    layout?.changeSideBar(false)
+    const mql = window.matchMedia("(max-width:768px)");
+    if (mql) {
+        layout?.changeSideBar("close")
+    }
 }
+
+const menuItemRenderClass = computed(e => ({
+    isActive: route.path === props.tab.path,
+    "menuItem-window": layout?.open === "opened",
+    "menuItem-mobile": layout?.open === "fullscreen",
+}))
 </script>
 
 <template>
     <lineVue v-if="tab.type == 'line'" />
-    <li v-else class="menuItem" @click="toPage" :class="{ isActive: route.path === tab.path }">
+    <li v-else class="menuItem" @click="toPage" :class="menuItemRenderClass">
         <i v-show="tab.icon" class="menuItem-icon" :class="tab.icon"></i>
         {{ tab.label }}
     </li>
@@ -42,14 +51,10 @@ function toPage() {
     background-color: #EAECEF;
 }
 
-/* pad长度 */
-@media screen and (min-width: 1280px) {
-
-    .menuItem {
-        flex-direction: row;
-        padding: 16px 24px;
-        align-items: center;
-    }
+.menuItem-window {
+    flex-direction: row;
+    padding: 16px 24px;
+    align-items: center;
 
     .menuItem-icon {
         margin-bottom: 0;
@@ -57,19 +62,18 @@ function toPage() {
     }
 }
 
-@media screen and (max-width: 768px) {
-
-    .menuItem {
-        flex-direction: row;
-        align-items: center;
-        height: 60px;
-        padding: 8px 24px;
-        font-size: 16px;
-    }
+.menuItem-mobile {
+    flex-direction: row;
+    align-items: center;
+    height: 60px;
+    padding: 8px 24px;
+    font-size: 16px;
 
     .menuItem-icon {
         margin-bottom: 0;
         margin-right: 12px;
     }
 }
+
+@media screen and (max-width: 768px) {}
 </style>

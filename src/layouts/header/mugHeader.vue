@@ -16,17 +16,18 @@ import mobile from "./mobile.vue"
     height: 60px;
     max-height: 60px;
     padding: 0 12px;
+
     .pc {
-        display: flex ;
+        display: flex;
     }
 
     .mobile {
-        display: none ;
+        display: none;
     }
 }
 
 /* pad长度 */
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1280px) and (min-width:768px) {
 
     .pc {
         display: flex !important;

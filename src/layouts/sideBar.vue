@@ -2,11 +2,10 @@
 import Logo from "./logo.vue";
 import MugMenu from "./mugMenu.vue";
 const layout = inject<LayoutProvide>("layout")
-
 </script>
 
 <template>
-    <section class="section" :class="{ isOpened: layout?.open }">
+    <section class="section" :class="{  isOpened: layout?.open === 'fullscreen'}">
         <Logo />
         <MugMenu />
     </section>
