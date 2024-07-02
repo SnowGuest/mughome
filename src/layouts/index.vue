@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import sideBar from './sideBar.vue';
 import MugHeader from './header/mugHeader.vue';
-import LoginModel, { API } from './loginModel.vue';
+import LoginModel, { type API } from './loginModel.vue';
 const loginModelInst = ref<API>()
 const layout = reactive<LayoutProvide>({
     open: "opened",

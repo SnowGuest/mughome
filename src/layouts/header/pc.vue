@@ -58,7 +58,7 @@ function changeSideBar() {
                         <p>发布内容/评论</p>
                     </a-col>
                 </a-row>
-                <a-button style="margin-top: 12px;" type="primary" size="33" block @click="layout?.showloginMode">登录/注册</a-button>
+                <a-button style="margin-top: 12px;" type="primary" size="large" block @click="layout?.showloginMode">登录/注册</a-button>
             </template>
             <template #title>
                 <h3>登录音柚窝你可以:</h3>
