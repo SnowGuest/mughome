@@ -31,7 +31,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@
+      - name: Add Pnpm
+        uses: pnpm/action-setup@v2v4
         with:
           node-version: 20
           cache: 'pnpm'
