@@ -7,12 +7,11 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import Components from 'unplugin-vue-components/vite'
 import UnoCSS from 'unocss/vite'
-import {
-  AntDesignVueResolver,
-} from 'unplugin-vue-components/resolvers'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import autoprefixer from "autoprefixer"
 // https://vitejs.dev/config/
 export default defineConfig({
-  base:"/mughome/",
+  base: "/mughome/",
   plugins: [
     vue(),
     vueJsx(),
@@ -36,6 +35,14 @@ export default defineConfig({
   ],
   server: {
     host: true
+  },
+  css: {
+    postcss: {
+      plugins: [
+        autoprefixer(),
+
+      ]
+    }
   },
   resolve: {
     alias: {

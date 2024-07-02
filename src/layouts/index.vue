@@ -2,11 +2,15 @@
 <script lang="ts" setup>
 import sideBar from './sideBar.vue';
 import MugHeader from './header/mugHeader.vue';
-
+import LoginModel, { API } from './loginModel.vue';
+const loginModelInst = ref<API>()
 const layout = reactive<LayoutProvide>({
     open: "opened",
     changeSideBar(mode) {
         layout.open = mode;
+    },
+    showloginMode() {
+        loginModelInst.value?.showModel()
     }
 })
 const sideBarWidth = computed(e => {
@@ -35,6 +39,7 @@ provide<LayoutProvide>("layout", layout)
             <router-view></router-view>
         </div>
     </div>
+    <LoginModel ref="loginModelInst" />
 </template>
 
 <style scoped>
@@ -50,7 +55,7 @@ provide<LayoutProvide>("layout", layout)
 @media screen and (max-width: 768px) {
 
     .main {
-       margin-left: 0 !important;
+        margin-left: 0 !important;
     }
 }
 

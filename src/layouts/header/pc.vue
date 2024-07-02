@@ -1,7 +1,7 @@
 <!--  -->
 <script lang="ts" setup>
 const layout = inject<LayoutProvide>("layout")
-const searchValue = ref("")
+const searchValue = ref("");
 function onSearch() {
 }
 
@@ -25,22 +25,43 @@ function changeSideBar() {
         </div>
         <a-popover placement="bottom">
             <template #content>
-                <div class="flex">
-                    <p>文章</p>
-                    <p>monf</p>
-                    <p>bof</p>
+                <div class="flex" style="column-gap: 6px;">
+                    <div class=" popoverItem">
+                        <i class="bi bi-file-earmark-richtext-fill"></i>
+                        文章
+                    </div>
+                    <div class="popoverItem">
+                        <i class="bi bi-card-heading"></i>
+                        monf
+                    </div>
+                    <div class="popoverItem">
+                        <i class="bi bi-credit-card-2-front-fill"></i>
+                        bof
+                    </div>
                 </div>
             </template>
             <button class="contribute">投稿</button>
         </a-popover>
         <a-popover placement="bottomRight">
             <template #content>
-                <p>关注喜欢的作者</p>
-                <p>发布内容/评论</p>
-                <a-button type="primary">登录/注册</a-button>
+                <a-row :gutter="[24, 4]">
+                    <a-col :span="12">
+                        <p>关注喜欢的作者</p>
+                    </a-col>
+                    <a-col :span="12">
+                        <p>发布内容/评论</p>
+                    </a-col>
+                    <a-col :span="12">
+                        <p>发布内容/评论</p>
+                    </a-col>
+                    <a-col :span="12">
+                        <p>发布内容/评论</p>
+                    </a-col>
+                </a-row>
+                <a-button style="margin-top: 12px;" type="primary" size="33" block @click="layout?.showloginMode">登录/注册</a-button>
             </template>
             <template #title>
-                <span>登录MugHome你可以</span>
+                <h3>登录音柚窝你可以:</h3>
             </template>
             <a-avatar>
                 <template #icon>
@@ -48,8 +69,8 @@ function changeSideBar() {
                 </template>
             </a-avatar>
         </a-popover>
-
     </div>
+
 </template>
 
 <style scoped lang="less">
@@ -88,6 +109,26 @@ function changeSideBar() {
         height: 26px;
         outline: none;
         border: none;
+    }
+}
+
+.popoverItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.21s;
+
+    &:hover {
+        background-color: #dddddd;
+    }
+
+    i {
+        font-size: 22px;
     }
 }
 </style>

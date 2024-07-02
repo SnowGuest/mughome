@@ -8,8 +8,7 @@ const props = defineProps<{
 }>()
 function toPage() {
     if (props.tab.path) router.push(props.tab.path);
-    const mql = window.matchMedia("(max-width:768px)");
-    if (mql) {
+    if (layout?.open === "fullscreen") {
         layout?.changeSideBar("close")
     }
 }

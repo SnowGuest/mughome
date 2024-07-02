@@ -15,6 +15,7 @@ declare global {
     interface LayoutProvide {
         open: "small" | "opened" | "close" | "fullscreen";
         changeSideBar: (bool: LayoutProvide['open']) => void
+        showloginMode: () => void
     }
 }
 export { } 

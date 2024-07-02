@@ -9,6 +9,7 @@ import mobile from "./mobile.vue"
         <pc class="pc" />
         <mobile class="mobile" />
     </header>
+
 </template>
 
 <style scoped lang="less">
