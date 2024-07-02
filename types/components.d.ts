@@ -11,6 +11,8 @@ declare module 'vue' {
     AButton: typeof import('ant-design-vue/es')['Button']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
     AForm: typeof import('ant-design-vue/es')['Form']
+    AFormItem: typeof import('ant-design-vue/es')['FormItem']
+    AInput: typeof import('ant-design-vue/es')['Input']
     AInputSearch: typeof import('ant-design-vue/es')['InputSearch']
     APopover: typeof import('ant-design-vue/es')['Popover']
     Line: typeof import('./../src/components/line.vue')['default']

@@ -1,5 +1,5 @@
 import { type Ref, ref } from "vue";
-import { type LocationQueryRaw, useRoute, useRouter } from 'vue-router'
+import { type LocationQueryRaw, useRoute, useRouter, type RouteLocation } from 'vue-router'
 
 import localforage from "localforage";
 import { useAppStore } from "../stores/app";
@@ -64,14 +64,12 @@ export function preloadAppConf() {
 
 
 // 二次校验权限
-export function pagePermissionVerify() {
+export function pagePermissionVerify(to: RouteLocation) {
     const appStore = useAppStore();
     if (appStore.language && appStore.userInfo && appStore.token) {
         return true
-        // next(to.path)
     } else {
-        return false
-        // next("/login")
+        return { path: "noAuth", query: { redirect: to.path }}
     }
 }
 
