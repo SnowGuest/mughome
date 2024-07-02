@@ -2,7 +2,13 @@
 <script lang="ts" setup>
 import sideBar from './sideBar.vue';
 import MugHeader from './header/mugHeader.vue';
-
+const layout = reactive<LayoutProvide>({
+    open: false,
+    changeSideBar(bool) {
+        layout.open = bool;
+    }
+})
+provide<LayoutProvide>("layout", layout)
 </script>
 
 <template>
@@ -23,6 +29,8 @@ import MugHeader from './header/mugHeader.vue';
     --side-bar-width: 210px;
 }
 
+
+
 /* pad长度 */
 @media screen and (max-width: 1280px) {
 
@@ -38,6 +46,7 @@ import MugHeader from './header/mugHeader.vue';
         --side-bar-width: 0px;
     }
 }
+
 
 .main {
     flex: 1;

@@ -3,11 +3,14 @@
 </script>
 
 <template>
-    <div class="logo flex-center">logo</div>
+    <div class="logo flex-center">
+        <img src="@/assets/images/logo.png" alt="" width="30" height="30">
+    </div>
 </template>
 
 <style scoped>
-.logo{
+.logo {
+    overflow: hidden;
     height: 60px;
 }
 </style>

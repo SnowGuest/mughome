@@ -12,5 +12,9 @@ declare global {
         icon?: string
         type?: "ground" | "line"
     }
+    interface LayoutProvide {
+        open: boolean;
+        changeSideBar: (bool: boolean) => void
+    }
 }
 export { } 

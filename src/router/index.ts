@@ -9,8 +9,10 @@ const router = createRouter({
       { path: "/", component: () => import("@/pages/index/index.vue") },
       { path: "competition", component: () => import("@/pages/competition/index.vue") },
       { path: "partition", component: () => import("@/pages/partition/index.vue") },
-
     ]
+  }, {
+    path: "/search",
+    component: () => import("@/pages/search/index.vue")
   }]
 })
 
