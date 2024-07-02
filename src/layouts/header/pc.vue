@@ -23,7 +23,16 @@ function changeSideBar() {
         <div class="flex items-center search">
             <a-input-search v-model:value="searchValue" @search="onSearch" />
         </div>
-        <button class="contribute">投稿</button>
+        <a-popover placement="bottom">
+            <template #content>
+                <div class="flex">
+                    <p>文章</p>
+                    <p>monf</p>
+                    <p>bof</p>
+                </div>
+            </template>
+            <button class="contribute">投稿</button>
+        </a-popover>
         <a-popover placement="bottomRight">
             <template #content>
                 <p>关注喜欢的作者</p>
