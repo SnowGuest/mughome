@@ -69,11 +69,11 @@ export function pagePermissionVerify() {
     const appStore = useAppStore();
     const route = useRoute();
     const router = useRouter();
-    console.log(appStore.languageMode, appStore.language, appStore.userInfo, appStore.token)
+    console.log("界面鉴权：", "用户选择语言：", appStore.languageMode,"系统确定语言", appStore.language,"userInfo:", appStore.userInfo, "用户token:",appStore.token)
     if (appStore.languageMode && appStore.language && appStore.userInfo && appStore.token) {
         return true
     } else {
-        router.replace({ path: "noAuth", query: { redirect: route.path } }) 
+        router.replace({ path: "noAuth", query: { redirect: route.path } })
     }
 }
 
