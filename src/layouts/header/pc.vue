@@ -1,5 +1,8 @@
 <!--  -->
 <script lang="ts" setup>
+import { useAppStore } from '@/stores/app';
+
+const appStore = useAppStore()
 const layout = inject<LayoutProvide>("layout")
 const searchValue = ref("");
 function onSearch() {
@@ -26,24 +29,24 @@ function changeSideBar() {
         <a-popover placement="bottom">
             <template #content>
                 <div class="flex" style="column-gap: 6px;">
-                    <div class=" popoverItem">
+                    <router-link to="/create" class="popoverItem">
                         <i class="bi bi-file-earmark-richtext-fill"></i>
                         文章
-                    </div>
-                    <div class="popoverItem">
+                    </router-link>
+                    <router-link to="/create/monf" class="popoverItem">
                         <i class="bi bi-card-heading"></i>
                         monf
-                    </div>
-                    <div class="popoverItem">
+                    </router-link>
+                    <router-link to="/create/bof" class="popoverItem">
                         <i class="bi bi-credit-card-2-front-fill"></i>
                         bof
-                    </div>
+                    </router-link>
                 </div>
             </template>
             <button class="contribute">投稿</button>
         </a-popover>
         <a-popover placement="bottomRight">
-            <template #content>
+            <template #content v-if="!appStore.signin">
                 <a-row :gutter="[24, 4]">
                     <a-col :span="12">
                         <p>关注喜欢的作者</p>
@@ -58,19 +61,26 @@ function changeSideBar() {
                         <p>发布内容/评论</p>
                     </a-col>
                 </a-row>
-                <a-button style="margin-top: 12px;" type="primary" size="large" block @click="layout?.showloginMode">登录/注册</a-button>
+                <a-button style="margin-top: 12px;" type="primary" size="large" block
+                    @click="layout?.showloginMode">登录/注册</a-button>
             </template>
-            <template #title>
+            <template #content v-else>
+                <div class="flex flex-col">
+                    <router-link :to="`/user/${appStore.userInfo.id}`" class="menuItem">个人中心</router-link>
+                    <router-link to="/setting" class="menuItem">设置</router-link>
+                    <div class="menuItem" @click="appStore.loginOut">退出</div>
+                </div>
+            </template>
+            <template #title v-if="!appStore.signin">
                 <h3>登录音柚窝你可以:</h3>
             </template>
-            <a-avatar>
+            <a-avatar :size="36">
                 <template #icon>
                     <!-- <UserOutlined /> -->
                 </template>
             </a-avatar>
         </a-popover>
     </div>
-
 </template>
 
 <style scoped lang="less">
@@ -129,6 +139,18 @@ function changeSideBar() {
 
     i {
         font-size: 22px;
+    }
+}
+
+.menuItem {
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.21s;
+    user-select: none;
+
+    &:hover {
+        background-color: #eeeeef;
     }
 }
 </style>

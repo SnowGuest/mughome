@@ -34,8 +34,7 @@ export function preloadAppConf() {
         // console.log(browserInfo)
         // 查询当前缓存的语言是否存在应用支持App列表中 不存在恢复兜底语言
         appStore.setLanguage(language && languageKeys.includes(language) ? language : getUserSystemLanguage(), languageMode)
-
-        if (userInfo && token) {
+        if (userInfo && token && Date.now() < parseInt(`${token.exp}0000`)) {
             appStore.token = token;
             appStore.userInfo = userInfo;
             appStore.setOrderSetting(setting)
@@ -69,7 +68,6 @@ export function pagePermissionVerify() {
     const appStore = useAppStore();
     const route = useRoute();
     const router = useRouter();
-    console.log("界面鉴权：", "用户选择语言：", appStore.languageMode,"系统确定语言", appStore.language,"userInfo:", appStore.userInfo, "用户token:",appStore.token)
     if (appStore.languageMode && appStore.language && appStore.userInfo && appStore.token) {
         return true
     } else {
@@ -87,6 +85,10 @@ export function getUserSystemLanguage(): LangEnmu {
     return languageKey.includes(userSystemLanguage) ? userSystemLanguage : "en"
 }
 
-export function requestError2Message() {
-
+export function requestError2Message<T extends (number | string | Record<string, any> | Array<any>)>(reqBody: InstanceBody<T>, errorBody: Record<string | number, string>) {
+    console.log(reqBody)
+    if (reqBody.code in errorBody) {
+        throw new Error(errorBody[reqBody.code])
+    }
+    return reqBody.data
 }

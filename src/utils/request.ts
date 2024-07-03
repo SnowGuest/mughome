@@ -23,7 +23,7 @@ const alovaInstance = createAlova({
     responded: {
         onSuccess: async (response, method) => {
             const json = await response.json();
-            return json.data;
+            return json;
         },
 
         // 请求失败的拦截器

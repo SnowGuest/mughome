@@ -39,6 +39,14 @@ export const useAppStore = defineStore('app', () => {
             localforage.setItem("setting", setting.value)
         }
     }
+    const signin = computed<boolean>(e =>
+        Boolean(languageMode.value && language.value && userInfo.value && token.value && Date.now() < parseInt(`${token.value.exp}0000`))
+    )
+    function loginOut(){
+        localforage.clear()
+        location.href = location.origin
+
+    }
     return {
         language,
         languageMode,
@@ -47,5 +55,7 @@ export const useAppStore = defineStore('app', () => {
         setLanguage,
         setting,
         setOrderSetting,
+        signin,
+        loginOut
     }
 })

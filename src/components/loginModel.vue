@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { message } from 'ant-design-vue';
 import localforage from 'localforage'
 import { login } from '../apis/account'
 import { useAppStore } from "../stores/app"
@@ -18,34 +19,43 @@ defineExpose<API>({
     }
 })
 async function submit() {
-    try {
-        const result = await login(form);
+    const result = await login(form);
+    appStore.token = result.token;
+    appStore.userInfo = result.user;
+    localforage.setItem("userInfo", result.user);
+    localforage.setItem("token", result.token);
+    message.success("登录成功")
+    setTimeout(() => {
+        location.href = location.origin
+    }, 1000)
 
-    } catch (error) {
-
-    } finally {
-        appStore.token = { exp: "1", value: "1" }
-        appStore.userInfo = { nickName: "xxx" } as User;
-        await localforage.setItem("userInfo", "userInfo");
-        await localforage.setItem("token", "token");
-    }
 }
 </script>
 <template>
-    <a-modal v-model:open="open" title="登录/注册" :footer="null">
-        <a-form :model="form" @submit="submit">
+    <a-modal v-model:open="open" title="登录" :footer="null">
+        <a-form :model="form" @submit="submit" class="form" size="large">
             <a-form-item name="account">
                 <a-input v-model:value="form.account" placeholder="用户名/邮箱"></a-input>
             </a-form-item>
-            <a-form-item name="password">
+            <a-form-item name="password" no-style>
                 <a-input v-model:value="form.password" placeholder="密码" type="password"></a-input>
             </a-form-item>
+            <div style="padding:6px 0;" class="flex justify-end">
+                <a-button type="link" style="font-size:12px;">忘记密码</a-button>
+            </div>
             <a-form-item>
-                <a-button type="primary" block html-type="submit">登录/注册</a-button>
+                <a-button size="large" type="primary" block html-type="submit" style="">登录</a-button>
+                <div class="flex justify-center">
+                    <a-button type="link" size="large" @click="$router.push('/account/signup')">注册账号</a-button>
+                </div>
             </a-form-item>
         </a-form>
     </a-modal>
 </template>
 
 
-<style scoped></style>
+<style scoped>
+.form {
+    padding: 80px 0 10px;
+}
+</style>
