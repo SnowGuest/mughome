@@ -1,7 +1,8 @@
-
 <script lang="ts" setup>
-import { login } from '@/apis/account';
-
+import localforage from 'localforage'
+import { login } from '../apis/account'
+import { useAppStore } from "../stores/app"
+const appStore = useAppStore()
 const open = ref(false);
 export interface API {
     showModel: () => void
@@ -19,7 +20,10 @@ defineExpose<API>({
 async function submit() {
     try {
         const result = await login(form);
-        console.log(result)
+        appStore.token = { exp: "1", value: "1" }
+        appStore.userInfo = { nickName: "xxx" } as User;
+        await localforage.setItem("userInfo", "userInfo");
+        await localforage.setItem("token", "token");
     } catch (error) {
 
     }

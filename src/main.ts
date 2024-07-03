@@ -15,7 +15,7 @@ import date_zhCn from 'dayjs/esm/locale/zh-cn';
 import localeData from 'dayjs/esm/plugin/localeData'
 import relativeTime from "dayjs/esm/plugin/relativeTime";
 import customParseFormat from "dayjs/esm/plugin/customParseFormat";
-import { getUserSystemLanguage } from './utils';
+import { getUserSystemLanguage, preloadAppConf } from './utils';
 import { getAllLanguage } from './lang';
 import zhCn from './lang/zh-cn.json';
 

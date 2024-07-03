@@ -16,7 +16,7 @@ const router = createRouter({
       { path: "partition", component: () => import("@/pages/partition/index.vue") }, // 分区列表
       { path: "partition/:id", component: () => import("@/pages/partition/[id].vue") }, // 分区详情
       { path: "user/:id", component: () => import("@/pages/user/[id].vue") }, // 用户详情
-      { path: "setting", beforeEnter: [pagePermissionVerify], component: () => import("@/pages/setting/index.vue") }, // 用户详情
+      { path: "setting",  component: () => import("@/pages/setting/index.vue") }, // 用户详情
       { path: "noAuth", component: () => import("@/pages/noAuth/index.vue") }, // 无身份验证
 
     ]

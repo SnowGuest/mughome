@@ -24,6 +24,7 @@ declare global {
         postCount: string;
         color?: string;
         followerCount: string;
+        gender:string;
         relations?: {
             /* 是否关注了此用户 */
             isSubscribed?: boolean;

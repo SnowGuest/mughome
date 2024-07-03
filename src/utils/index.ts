@@ -29,6 +29,7 @@ export function preloadAppConf() {
         // browser(),
         nextTick(),
     ]).then(e => {
+        console.log("缓存载入")
         const [userInfo, token, language, languageMode, setting, browserInfo] = e;
         // console.log(browserInfo)
         // 查询当前缓存的语言是否存在应用支持App列表中 不存在恢复兜底语言
@@ -64,12 +65,15 @@ export function preloadAppConf() {
 
 
 // 二次校验权限
-export function pagePermissionVerify(to: RouteLocation) {
+export function pagePermissionVerify() {
     const appStore = useAppStore();
-    if (appStore.language && appStore.userInfo && appStore.token) {
+    const route = useRoute();
+    const router = useRouter();
+    console.log(appStore.languageMode, appStore.language, appStore.userInfo, appStore.token)
+    if (appStore.languageMode && appStore.language && appStore.userInfo && appStore.token) {
         return true
     } else {
-        return { path: "noAuth", query: { redirect: to.path }}
+        router.replace({ path: "noAuth", query: { redirect: route.path } }) 
     }
 }
 
@@ -83,6 +87,6 @@ export function getUserSystemLanguage(): LangEnmu {
     return languageKey.includes(userSystemLanguage) ? userSystemLanguage : "en"
 }
 
-export function requestError2Message(){
+export function requestError2Message() {
 
 }

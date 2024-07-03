@@ -22,6 +22,6 @@ const locale = computed<Locale>(e => dayjsKv[appStore.language])
 
 <template>
     <a-config-provider :locale="locale">
-        <router-view></router-view>
+        <router-view v-if="showView"></router-view>
     </a-config-provider>
 </template>

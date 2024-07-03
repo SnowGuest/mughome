@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import sideBar from './sideBar.vue';
 import MugHeader from './header/mugHeader.vue';
-import LoginModel, { type API } from './loginModel.vue';
+import LoginModel, { type API } from '@/components/loginModel.vue';
 const loginModelInst = ref<API>()
 const layout = reactive<LayoutProvide>({
     open: "opened",
@@ -32,7 +32,7 @@ provide<LayoutProvide>("layout", layout)
 </script>
 
 <template>
-    <div class="flex relative mughome flex-1">
+    <div class=" relative mughome flex-1">
         <sideBar />
         <div class="main">
             <MugHeader />
@@ -61,10 +61,10 @@ provide<LayoutProvide>("layout", layout)
 
 
 .main {
-    flex: 1;
-    width: 100%;
     margin-left: var(--side-bar-width);
     height: 100%;
     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    max-height: 100%;
+    overflow-y: auto;
 }
 </style>
