@@ -19,13 +19,15 @@ defineExpose<API>({
 })
 async function submit() {
     try {
-        // const result = await login(form);
+        const result = await login(form);
+
+    } catch (error) {
+
+    } finally {
         appStore.token = { exp: "1", value: "1" }
         appStore.userInfo = { nickName: "xxx" } as User;
         await localforage.setItem("userInfo", "userInfo");
         await localforage.setItem("token", "token");
-    } catch (error) {
-
     }
 }
 </script>

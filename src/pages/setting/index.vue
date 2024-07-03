@@ -3,6 +3,20 @@ import { pagePermissionVerify } from "@/utils"
 import UserInfoVue from "./userInfo.vue"
 import AccountSecurity from "./accountSecurity.vue";
 pagePermissionVerify();
+const route = useRoute();
+const currentTree = ref("#userinfo")
+const leftTree = [
+    { label: "个人信息", hash: "#userinfo", },
+    { label: "账号安全", hash: "#security", },
+]
+watch(route, () => {
+    if (route.hash) {
+        currentTree.value = route.hash
+    }
+})
+if (route.hash) {
+    currentTree.value = route.hash
+}
 </script>
 
 <template>
@@ -11,18 +25,19 @@ pagePermissionVerify();
     </div>
     <div class="setting flex">
         <div class="left">
-            <div class="leftItem-current">个人信息</div>
-            <div class="leftItem">账号与安全</div>
+            <a v-for="item in leftTree" :href="item.hash"
+                :class="`leftItem${item.hash === currentTree ? '-current' : ''}`">{{ item.label }}</a>
+            <!-- <a href="#security" class="leftItem">账号与安全</a> -->
         </div>
         <div class="right flex-1">
             <div class="card">
-                <div class="title">个人信息</div>
+                <div class="title" id="userinfo">个人信息</div>
                 <div class="cardBody">
                     <UserInfoVue />
                 </div>
             </div>
             <div class="card">
-                <div class="title">账号与安全</div>
+                <div class="title" id="security">账号与安全</div>
                 <AccountSecurity />
             </div>
         </div>
@@ -71,7 +86,8 @@ pagePermissionVerify();
     border-radius: 4px;
     margin-right: 16px;
     align-self: flex-start;
-
+    position: sticky;
+    top: 16px;
     .leftItem-current {
         background-color: #EEEEF2;
     }

@@ -34,10 +34,7 @@ export default defineConfig({
     })
   ],
   server: {
-    host: true,
-    proxy: {
-      '/proxy': 'https://api.mughome.top/community/v0/',
-    }
+    host: true
   },
   css: {
     postcss: {

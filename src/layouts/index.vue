@@ -66,5 +66,7 @@ provide<LayoutProvide>("layout", layout)
     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
     max-height: 100%;
     overflow-y: auto;
+    scroll-behavior: smooth;
+    position: relative;
 }
 </style>
