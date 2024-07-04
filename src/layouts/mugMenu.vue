@@ -1,7 +1,7 @@
 <!-- 侧栏组件 -->
 <script lang="ts" setup>
 import menuItem from './menuItem.vue';
-const tab: Tab[] = [{
+const tab = computed<Tab[]>(e => [{
     path: "/",
     label: "首页",
     icon: "bi bi-calendar2-fill",
@@ -15,12 +15,12 @@ const tab: Tab[] = [{
     path: "/partition",
     label: "分区",
     icon: "bi bi-microsoft",
-}]
+}])
 </script>
 
 <template>
     <ul class="menu">
-        <menuItem v-for="item in tab" :tab="item" >
+        <menuItem v-for="item in tab" :tab="item">
         </menuItem>
     </ul>
 </template>
