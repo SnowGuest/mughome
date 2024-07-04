@@ -23,8 +23,8 @@ export interface PostParams extends Pagination {
 
 
 
-export async function getPosts(params: PostParams) {
-    return await request.Get<InstanceBody<PostsBody>>(`post`, {
+export function getPosts(params: PostParams) {
+    return request.Get<InstanceBody<PostsBody>>(`post`, {
         params,
         name: "getPosts"
     })

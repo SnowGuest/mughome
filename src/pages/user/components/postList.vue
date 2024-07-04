@@ -46,43 +46,49 @@ const monfs = new Map<string | number, Monf>()
 // }
 
 
-// const {
-//     // 加载状态
-//     loading,
+const {
+    // 加载状态
+    loading,
 
-//     // 列表数据
-//     data,
+    // 列表数据
+    data,
 
-//     // 是否为最后一页
-//     // 下拉加载时可通过此参数判断是否还需要加载
-//     isLastPage,
+    // 是否为最后一页
+    // 下拉加载时可通过此参数判断是否还需要加载
+    isLastPage,
 
-//     // 当前页码，改变此页码将自动触发请求
-//     page,
+    // 当前页码，改变此页码将自动触发请求
+    page,
 
-//     // 每页数据条数
-//     pageSize,
+    // 每页数据条数
+    pageSize,
 
-//     // 分页页数
-//     pageCount,
+    // 分页页数
+    pageCount,
 
-//     // 总数据量
-//     total
-// } = usePagination(
-//     // Method实例获取函数，它将接收page和pageSize，并返回一个Method实例
-//     (page, pageSize) => getPosts({}),
-//     {
-//         // 请求前的初始数据（接口返回的数据格式）
-//         initialData: {
-//             total: 0,
-//             data: []
-//         },
-//         append: true,
-//         initialPage: 1, // 初始页码，默认为1
-//         initialPageSize: 10 // 初始每页数据条数，默认为10
-//     }
-// );
+    // 总数据量
+    total
+} = usePagination(
+    // Method实例获取函数，它将接收page和pageSize，并返回一个Method实例
+    (page, pageSize) => getPosts({ page, pageSize, postUserId: user.value?.id }),
+    {
 
+        // 请求前的初始数据（接口返回的数据格式）
+        initialData: {
+            total: 0,
+            data: []
+        },
+        total: response => 0,
+        data: response => response.data.post,
+        append: true,
+        immediate: false,
+        initialPage: 0, // 初始页码，默认为1
+        initialPageSize: 10 // 初始每页数据条数，默认为10
+    }
+);
+function loadList() {
+    page.value++
+}
 </script>
 
 <template>
@@ -98,10 +104,10 @@ const monfs = new Map<string | number, Monf>()
                 <a-tab-pane key="post" tab="帖子" />
                 <a-tab-pane key="monf" tab="Monf" />
             </a-tabs>
-            <div v-for="tab in tabs" :key="tab.key">
-                <Post v-if="tab.key === 'post'" v-model="tabs[0].data" />
-                <Monf v-else v-model:data="tab.data" />
-            </div>
+            <Post v-if="activeKey === 'post'" v-model="data" />
+            <Post v-else v-model="data" />
+
+
             <Loading @load="loadList" />
 
         </div>
