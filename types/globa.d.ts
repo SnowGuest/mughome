@@ -17,10 +17,15 @@ declare global {
         changeSideBar: (bool: LayoutProvide['open']) => void
         showloginMode: () => void
     }
-    export interface InstanceBody<T = null> {
+     interface InstanceBody<T = null> {
         code: number,
         message: string,
         data: T
     }
+    interface Pagination {
+        page: string | number;
+        pageSize: string | number;
+    }
+
 }
 export { } 

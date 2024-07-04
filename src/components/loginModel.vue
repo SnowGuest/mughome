@@ -20,10 +20,10 @@ defineExpose<API>({
 })
 async function submit() {
     const result = await login(form);
-    appStore.token = result.token;
-    appStore.userInfo = result.user;
-    localforage.setItem("userInfo", result.user);
-    localforage.setItem("token", result.token);
+    appStore.token = result.data.token;
+    appStore.userInfo = result.data.user;
+    localforage.setItem("userInfo", result.data.user);
+    localforage.setItem("token", result.data.token);
     message.success("登录成功")
     setTimeout(() => {
         location.href = location.origin

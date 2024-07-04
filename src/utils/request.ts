@@ -1,7 +1,9 @@
+import { useAppStore } from '@/stores/app';
 import { createAlova } from 'alova';
 import fetchAdapter from 'alova/fetch';
 import VueHook from 'alova/vue';
 import { message } from 'ant-design-vue';
+import { requestError2Message } from '.';
 const alovaInstance = createAlova({
     requestAdapter: fetchAdapter(),
     statesHook: VueHook,
@@ -9,8 +11,6 @@ const alovaInstance = createAlova({
     timeout: 10000,
     cacheFor: {
         GET: {
-            // 设置缓存模式为持久化模式
-            mode: 'restore',
             expire: 60 * 10 * 1000 // 10分钟缓存
         },
         POST: {
@@ -18,11 +18,18 @@ const alovaInstance = createAlova({
         }
     },
     beforeRequest(method) {
-        method.config.headers.token = 'token';
+        const appStore = useAppStore();
+        if (appStore.signin) {
+            method.config.headers.Authorization  = `Bearer ${appStore.token?.value}`;
+        }
     },
     responded: {
         onSuccess: async (response, method) => {
             const json = await response.json();
+            console.log(method.meta)
+            if (method.meta?.errorCode) {
+                requestError2Message(json, method.meta.errorCode)
+            }
             return json;
         },
 

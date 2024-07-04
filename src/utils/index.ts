@@ -86,7 +86,6 @@ export function getUserSystemLanguage(): LangEnmu {
 }
 
 export function requestError2Message<T extends (number | string | Record<string, any> | Array<any>)>(reqBody: InstanceBody<T>, errorBody: Record<string | number, string>) {
-    console.log(reqBody)
     if (reqBody.code in errorBody) {
         throw new Error(errorBody[reqBody.code])
     }

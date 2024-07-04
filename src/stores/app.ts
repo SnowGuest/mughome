@@ -42,7 +42,10 @@ export const useAppStore = defineStore('app', () => {
     const signin = computed<boolean>(e =>
         Boolean(languageMode.value && language.value && userInfo.value && token.value && Date.now() < parseInt(`${token.value.exp}0000`))
     )
-    function loginOut(){
+    const isSelf = (id: string|number) => {
+        return signin.value && `${id}` === `${userInfo.value?.id}`
+    }
+    function loginOut() {
         localforage.clear()
         location.href = location.origin
 
@@ -56,6 +59,7 @@ export const useAppStore = defineStore('app', () => {
         setting,
         setOrderSetting,
         signin,
-        loginOut
+        loginOut,
+        isSelf
     }
 })
