@@ -66,7 +66,7 @@ function changeSideBar() {
             </template>
             <template #content v-else>
                 <div class="flex flex-col">
-                    <router-link :to="`/user/${appStore.userInfo.id}`" class="menuItem">个人中心</router-link>
+                    <router-link :to="`/user/${appStore.userInfo?.id}`" class="menuItem">个人中心</router-link>
                     <router-link to="/setting" class="menuItem">设置</router-link>
                     <div class="menuItem" @click="appStore.loginOut">退出</div>
                 </div>
