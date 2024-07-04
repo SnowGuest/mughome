@@ -5,8 +5,10 @@ import { useAppStore } from '@/stores/app';
 import { useUserStore } from '@/stores/users';
 import { storeToRefs } from "pinia"
 import { message } from "ant-design-vue"
-defineModel<Map<string | number, Post>>();
-
+defineModel<Post[]>();
+defineEmits<{
+    update:[]
+}>()
 const router = useRouter()
 const appStore = useAppStore()
 const { userMap } = storeToRefs(useUserStore());
@@ -33,7 +35,7 @@ async function like(item: Post) {
 </script>
 
 <template>
-    <article v-for="[key, item] in modelValue" :key="key" class="post">
+    <article v-for="(item,i) in modelValue" :key="item.id" class="post">
         <div class="flex">
             <a-avatar @click="toDetali(item)" class="avatar" :src="userMap.get(item.createdUserId)?.avatarUrl"
                 :size="38"></a-avatar>
@@ -75,6 +77,7 @@ async function like(item: Post) {
 
 .nickName {
     font-size: 14px;
+    margin-bottom: 6px;
 }
 
 .bio {

@@ -31,7 +31,7 @@ const { stop } = useIntersectionObserver(
     display: block;
     font-size: 0;
     color: #000;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 .loading.la-dark {

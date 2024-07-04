@@ -35,3 +35,22 @@ export function getMonfs(params: MonfsParams) {
         name: "getMonfs"
     })
 }
+
+/**
+ * @GET monf点赞
+ * */
+export function monfLike(monfWorkId: string | number) {
+    return request.Get<InstanceBody<MonfListBody>>(`/event/monf/work/${monfWorkId}/like`, {
+        hitSource: ["getMonfs"]
+    }).send(true)
+}
+
+/**
+ * @GET monf取消点赞
+ * */
+export function monfunLike(monfWorkId: string | number) {
+    return request.Get<InstanceBody<MonfListBody>>(`/event/monf/work/${monfWorkId}/like`, {
+        hitSource: ["getMonfs"]
+
+    }).send(true)
+}

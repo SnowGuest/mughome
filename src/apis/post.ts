@@ -43,5 +43,5 @@ export async function postLike(id: Post["id"], cancel?: boolean) {
             params: { cancel },
             hitSource: ["getMonfs", "getPosts"]
         },
-    )
+    ).send(true)
 }

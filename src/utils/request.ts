@@ -26,7 +26,6 @@ const alovaInstance = createAlova({
     responded: {
         onSuccess: async (response, method) => {
             const json = await response.json();
-            console.log(method.meta)
             if (method.meta?.errorCode) {
                 requestError2Message(json, method.meta.errorCode)
             }

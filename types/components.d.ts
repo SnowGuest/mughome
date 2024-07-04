@@ -7,7 +7,6 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    AAlert: typeof import('ant-design-vue/es')['Alert']
     AAvatar: typeof import('ant-design-vue/es')['Avatar']
     AButton: typeof import('ant-design-vue/es')['Button']
     ACol: typeof import('ant-design-vue/es')['Col']
@@ -19,17 +18,13 @@ declare module 'vue' {
     AInputSearch: typeof import('ant-design-vue/es')['InputSearch']
     AModal: typeof import('ant-design-vue/es')['Modal']
     APopover: typeof import('ant-design-vue/es')['Popover']
-    ARadio: typeof import('ant-design-vue/es')['Radio']
-    ARadioGroup: typeof import('ant-design-vue/es')['RadioGroup']
     AResult: typeof import('ant-design-vue/es')['Result']
     ARow: typeof import('ant-design-vue/es')['Row']
     ASkeleton: typeof import('ant-design-vue/es')['Skeleton']
     ASkeletonAvatar: typeof import('ant-design-vue/es')['SkeletonAvatar']
     ASkeletonButton: typeof import('ant-design-vue/es')['SkeletonButton']
-    ASkeletonInput: typeof import('ant-design-vue/es')['SkeletonInput']
     ATabPane: typeof import('ant-design-vue/es')['TabPane']
     ATabs: typeof import('ant-design-vue/es')['Tabs']
-    ATextarea: typeof import('ant-design-vue/es')['Textarea']
     ATypographyParagraph: typeof import('ant-design-vue/es')['TypographyParagraph']
     Line: typeof import('./../src/components/line.vue')['default']
     Loading: typeof import('./../src/components/loading.vue')['default']
