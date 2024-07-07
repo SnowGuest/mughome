@@ -16,6 +16,7 @@
     "ant-design-vue": "~4.2.3",
     "bootstrap-icons": "^1.11.3",
     "browser-tool": "^1.2.7",
+    "canvas-confetti": "^1.9.3",
     "dayjs": "^1.11.11",
     "default-passive-events": "^2.0.0",
     "less": "^4.2.0",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
+    "@types/canvas-confetti": "^1.6.4",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^20.14.5",
     "@types/nprogress": "^0.2.3",
