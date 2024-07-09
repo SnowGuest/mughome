@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import dayjs from 'dayjs';
+import dayjs from 'dayjs/esm';
 
 const router = useRouter()
 const props = defineProps<{ item: Post }>();

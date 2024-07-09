@@ -73,8 +73,8 @@
             <h3>发表成功！</h3>
             <p>帖子已经发布成功，接下来您想要？</p>
             <div class="successCard-footer">
-                <a-button type="info" @click="router.replace({ path: `/` })">回到首页</a-button>
-                <a-button type="success" @click="router.replace({ path: `/article/${post?.post.id}` })">
+                <a-button @click="router.replace({ path: `/` })">回到首页</a-button>
+                <a-button type="primary" @click="router.replace({ path: `/article/${post?.post.id}` })">
                     查看详情</a-button>
             </div>
         </div>
@@ -213,9 +213,9 @@ function randomInRange(min: number, max: number) {
 }
 
 async function sendPost() {
-    if (headerImages.value.length > 0) {
-        form.headerImage = (await getUploadAction(headerImages.value)).join("")
-    }
+    // if (headerImages.value.length > 0) {
+    //     form.headerImage = (await getUploadAction(headerImages.value)).join("")
+    // }
     if (!form.title) throw new Error("未填写标题");
     if (!form.content) throw new Error("缺少内容");
     if (form.content.length < 20) throw new Error("文章字数应不少于20");
