@@ -7,7 +7,9 @@ import { usePagination } from 'alova/client';
 import useHead from './components/useHead.vue';
 import postBody from './components/postBody.vue';
 import { useAppStore } from '@/stores/app';
-import Macy from "macy"
+
+import { Waterfall } from 'vue-waterfall-plugin-next'
+import 'vue-waterfall-plugin-next/dist/style.css'
 const userStore = useUserStore()
 const appStore = useAppStore()
 const layout = inject<LayoutProvide>("layout");
@@ -16,10 +18,8 @@ async function loadBanner() {
     const result = await getBanners();
     banners.value = result.data
 }
-async function init() {
-    loadBanner()
-}
-init()
+loadBanner();
+const initLoading = ref(true)
 const {
     loading,
     data,
@@ -32,7 +32,7 @@ const {
     {
         data: response => {
             userStore.setUsers(response.data.includes.users);
-            nextTick(renderMacy)
+            initLoading.value = false
             return response.data.post
         },
         append: true,
@@ -42,22 +42,28 @@ const {
     }
 );
 loadBanner();
-function renderMacy() {
-    const macyInstance = Macy({
-        container: '.posts',
-        margin: {
-            x: 8,
-            y: 8
-        },
-        breakAt: {
-            1250: { columns: 3 },
-            1000: { columns: 2 },
-            700: { columns: 1 },
-        },
-        cancelLegacy: true,
-    });
+let macyInstance;
+onMounted(() => {
+    console.log("执行")
+    // macyInstance = Macy({
+    //     container: '.posts',
+    //     margin: {
+    //         x: 8,
+    //         y: 8
+    //     },
+    //     breakAt: {
+    //         1250: { columns: 3 },
+    //         1000: { columns: 2 },
+    //         700: { columns: 1 },
+    //     },
+    //     cancelLegacy: true,
+    // });
+})
+const breakpoints = {
+    1250: { rowPerView: 3 },
+    1000: { rowPerView: 2 },
+    700: { rowPerView: 1 },
 }
-
 </script>
 
 <template>
@@ -69,23 +75,19 @@ function renderMacy() {
         </a-carousel>
         <h3 class="title">文章</h3>
         <div style="padding: 16px 0;" v-show="loading">
-            <a-skeleton v-show="loading" />
+            <a-skeleton active v-show="loading" />
         </div>
-        <!-- <a-row class="posts" :gutter="[8, 8]"> -->
-        <!-- <a-col :xs="24" :sm="24" :md="12" :lg="8" :xl="6" v-for="item in data" :key="item.id"> -->
-        <!-- <div class="post flex flex-col">
-                    <useHead :createdUserId="item.createdUserId" />
-                    <postBody :item="item" />
-                </div> -->
-        <!-- </a-col> -->
-        <!-- </a-row> -->
 
-        <div class="posts" v-show="!loading">
-            <div v-for="item in data" :key="item.id" class="post flex flex-col">
-                <useHead :createdUserId="item.createdUserId" />
-                <postBody :item="item" />
-            </div>
-        </div>
+        <Waterfall backgroundColor="transparent" :list="data" :breakpoints="breakpoints" :crossOrigin="false"
+            imgSelector="headerImage" :gutter="14" :animationDelay="0" :animationDuration="0" :posDuration="0">
+            <template #item="{ item, url, index }">
+                <div class="post flex flex-col">
+                    <useHead :createdUserId="item.createdUserId" />
+                    <postBody :item="item" :url="url" />
+                </div>
+            </template>
+        </Waterfall>
+        <Loading v-if="!initLoading" @load="page++" v-show="!isLastPage" />
     </div>
     <!-- <div>首页{{ layout?.open }}</div>
     <router-link to="/user/1">去user页面</router-link>
@@ -98,9 +100,16 @@ function renderMacy() {
 .container {
     margin: 0 auto;
     padding: 0 16px;
+
+    :deep(.fadeIn) {
+        animation-name: none !important;
+    }
 }
 
-.posts {}
+.posts {
+    width: 100%;
+    min-height: 50vh;
+}
 
 .post {
     background-color: #ffffff;

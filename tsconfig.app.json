@@ -13,7 +13,6 @@
     "types/auto-imports.d.ts",
     "types/components.d.ts",
     "types/other.d.ts",
-    "types/macy.d.ts",
   ],
   "compilerOptions": {
     "jsxImportSource": "vue",

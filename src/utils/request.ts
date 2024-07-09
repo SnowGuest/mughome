@@ -53,6 +53,11 @@ const alovaInstance = createAlova({
     },
     beforeRequest: onAuthRequired((method) => {
         const appStore = useAppStore();
+        if (method.meta&&"requiredLogin" in method.meta && method.meta.requiredLogin && !appStore.signin) {
+            message.warn("请先登录")
+            return Promise.reject()
+        }
+        
         if (appStore.signin) {
             method.config.headers.Authorization = `Bearer ${appStore.token?.value}`;
         }
