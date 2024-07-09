@@ -49,5 +49,11 @@ import mobile from "./mobile.vue"
     .mobile {
         display: flex !important;
     }
+    .header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background-color: #F8F7F8;
+    }
 }
 </style>

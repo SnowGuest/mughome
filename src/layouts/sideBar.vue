@@ -31,5 +31,6 @@ const layout = inject<LayoutProvide>("layout")
     left: 0;
     top: 0;
     background-color: #FFFFFF;
+    z-index: 2;
 }
 </style>

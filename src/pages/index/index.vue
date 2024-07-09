@@ -75,11 +75,12 @@ const breakpoints = {
         </a-carousel>
         <h3 class="title">文章</h3>
         <div style="padding: 16px 0;" v-show="loading">
-            <a-skeleton active v-show="loading" />
+            <a-skeleton active />
         </div>
 
-        <Waterfall backgroundColor="transparent" :list="data" :breakpoints="breakpoints" :crossOrigin="false"
-            imgSelector="headerImage" :gutter="14" :animationDelay="0" :animationDuration="0" :posDuration="0">
+        <Waterfall :hasAroundGutter="false" v-show="!loading" backgroundColor="transparent" :list="data" :breakpoints="breakpoints"
+            :crossOrigin="false" imgSelector="headerImage" :gutter="14" :animationDelay="0" :animationDuration="0"
+            :posDuration="0">
             <template #item="{ item, url, index }">
                 <div class="post flex flex-col">
                     <useHead :createdUserId="item.createdUserId" />
