@@ -73,9 +73,9 @@
             <h3>发表成功！</h3>
             <p>帖子已经发布成功，接下来您想要？</p>
             <div class="successCard-footer">
-                <a-button @click="router.replace({ path: `/` })">回到首页</a-button>
+                <!-- <a-button @click="router.replace({ path: `/` })">回到首页</a-button>
                 <a-button type="primary" @click="router.replace({ path: `/article/${post?.post.id}` })">
-                    查看详情</a-button>
+                    查看详情</a-button> -->
             </div>
         </div>
     </a-modal>
