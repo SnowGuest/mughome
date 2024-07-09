@@ -27,7 +27,10 @@ const router = createRouter({
   }, {
     path: "/account/signin",
     component: () => import("@/pages/account/signin.vue")
-  }]
+  },
+  { path: "creator/:id?", component: () => import("@/pages/creator/index.vue") }, // 发帖/编辑
+  { path: "editer/:id?", component: () => import("@/pages/creator/index.vue") }, // 发帖/编辑
+  ]
 })
 
 export default router
