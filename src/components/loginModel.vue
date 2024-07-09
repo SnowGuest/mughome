@@ -20,6 +20,7 @@ defineExpose<API>({
 })
 async function submit() {
     const result = await login(form);
+    result.data.token.exp = `${result.data.token.exp}000`
     appStore.token = result.data.token;
     appStore.userInfo = result.data.user;
     localforage.setItem("userInfo", result.data.user);

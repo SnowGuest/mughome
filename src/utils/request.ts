@@ -4,6 +4,40 @@ import fetchAdapter from 'alova/fetch';
 import VueHook from 'alova/vue';
 import { message } from 'ant-design-vue';
 import { requestError2Message } from '.';
+import { createClientTokenAuthentication } from 'alova/client';
+import { refreshToken } from '@/apis/token';
+import localforage from 'localforage';
+const { onAuthRequired, onResponseRefreshToken } = createClientTokenAuthentication({
+    refreshToken: {
+        // 在请求前触发，将接收到method参数，并返回boolean表示token是否过期
+        isExpired: method => {
+            const appStore = useAppStore();
+            if (appStore.token) {
+                return Number(appStore.token.exp) + (2 * 60 * 1000) < Date.now();
+            }
+            return false
+        },
+
+        // 当token过期时触发，在此函数中触发刷新token
+        handler: async method => {
+            const appStore = useAppStore();
+            try {
+                const { data } = await refreshToken();
+                appStore.token = data.token;
+                localforage.setItem('token', data.token);
+            } catch (error) {
+                // appStore.loginOut()
+                // localforage.clear();
+                // const router = useRouter()
+                // router
+                // token刷新失败，跳转回登录页
+                // location.href = '/login';
+                // 并抛出错误
+                throw error;
+            }
+        }
+    }
+});
 const alovaInstance = createAlova({
     requestAdapter: fetchAdapter(),
     statesHook: VueHook,
@@ -17,13 +51,13 @@ const alovaInstance = createAlova({
             expire: 0 // post请求不设置缓存
         }
     },
-    beforeRequest(method) {
+    beforeRequest: onAuthRequired((method) => {
         const appStore = useAppStore();
         if (appStore.signin) {
-            method.config.headers.Authorization  = `Bearer ${appStore.token?.value}`;
+            method.config.headers.Authorization = `Bearer ${appStore.token?.value}`;
         }
-    },
-    responded: {
+    }),
+    responded: onResponseRefreshToken({
         onSuccess: async (response, method) => {
             const json = await response.json();
             if (method.meta?.errorCode) {
@@ -38,7 +72,7 @@ const alovaInstance = createAlova({
         onError: (err, method) => {
             message.error("服务器异常，请稍后重试")
         },
-    }
+    })
 });
 
 export default alovaInstance

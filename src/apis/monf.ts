@@ -41,7 +41,10 @@ export function getMonfs(params: MonfsParams) {
  * */
 export function monfLike(monfWorkId: string | number) {
     return request.Get<InstanceBody<MonfListBody>>(`/event/monf/work/${monfWorkId}/like`, {
-        hitSource: ["getMonfs"]
+        hitSource: ["getMonfs"],
+        meta:{
+            requiredLogin: true,
+        }
     }).send(true)
 }
 
@@ -50,7 +53,9 @@ export function monfLike(monfWorkId: string | number) {
  * */
 export function monfunLike(monfWorkId: string | number) {
     return request.Get<InstanceBody<MonfListBody>>(`/event/monf/work/${monfWorkId}/like`, {
-        hitSource: ["getMonfs"]
-
+        hitSource: ["getMonfs"],
+        meta:{
+            requiredLogin: true,
+        }
     }).send(true)
 }

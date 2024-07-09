@@ -1,77 +1,73 @@
-
 <template>
-    <ScrollView>
-        <div class="creator">
-            <div class="card column">
-                <input v-model="form.title" type="text" class="titleInput outline-none" placeholder="标题">
-                <MdEditor ref="editorRef" @on-upload-img="onUploadImg" :toolbars="toolbar" class="Editor"
-                    v-model="form.content">
-                    <template #defToolbars>
-                        <NormalToolbar title="Bilibili" @onClick="addBilibili">
-                            <template #trigger>
-                                <i class="fa-brands fa-bilibili"></i>
-                                <!-- <Icon name="ri:bilibili-line"></Icon> -->
-                            </template>
-                        </NormalToolbar>
+    <div class="creator">
+        <div class="creator-header flex items-center">
+            <img src="@/assets/images/logo.png" alt="" width="40" height="40" />
+            稿件管理/{{ route.params.id ? '编辑' : '发帖' }}
+        </div>
+        <input v-model="form.title" type="text" class="titleInput outline-none" placeholder="输入标题">
+        <MdEditor ref="editorRef" @on-upload-img="onUploadImg" :toolbars="toolbar" class="Editor"
+            v-model="form.content">
+            <template #defToolbars>
+                <NormalToolbar title="Bilibili" @onClick="addBilibili">
+                    <template #trigger>
+                        <img src="@/assets/images/bilibili.svg" alt="">
                     </template>
+                </NormalToolbar>
+            </template>
 
-                </MdEditor>
-                <!-- <n-button type="info" block class="creator-submit-m">
-                发布
-            </a-button> -->
-            </div>
-            <div class="right">
-                <div class="card-right ">
-                    <h2>设置</h2>
-                    <a-alert title="提示" type="info">
+        </MdEditor>
+
+        <!-- <div class="right">
+            <div class="card-right ">
+                <h2>设置</h2>
+                <a-alert type="info" show-icon>
+                    <template #message>
                         发帖则表示您同意MUGHome社区
                         <a href="" target="_blank">《使用规范》</a>和
                         <a href="" target="_blank">《发帖规范》</a>
-                    </a-alert>
-                    <a-form label-placement="left" ref="formRef" :model="form" :rules="rules">
-                        <div class="card-right-top">
-                            <a-form-item class="right-form-item" path="categoryId[0]">
-                                <a-select placeholder="一级分区" v-model:value="form.categoryId[0]"
-                                    :options="categorieOneOptions" @change="form.categoryId[1] = null" />
-                            </a-form-item>
-                            <a-form-item class="right-form-item" path="categoryId[1]">
-                                <a-select placeholder="二级分区" clearable v-model:value="form.categoryId[1]"
-                                    :options="categorieTwoOptions" />
+                    </template>
+                </a-alert>
+                <a-form label-placement="left" ref="formRef" :model="form" :rules="rules">
+                    <a-form-item path="headerImage" style="margin-top: 20px;">
 
-                            </a-form-item>
+                        <a-upload-dragger accept="image/*" v-model:fileList="headerImages" name="file"
+                            :multiple="false">
 
-                        </div>
-                        <a-form-item label="封面" path="headerImage">
+                            <p class="ant-upload-text">点击上传封面头图</p>
 
-                            <a-upload-dragger accept="image/*" v-model:fileList="headerImages" name="file"
-                                :multiple="false">
-
-                                <p class="ant-upload-text">点击上传头图</p>
-
-                            </a-upload-dragger>
-
-                            <!-- <a-upload ref="uploadComponent" :default-upload="false" accept="image/*"
-                                v-model:file-list="headerImages" list-type="image-card" :max="1" /> -->
+                        </a-upload-dragger>
+                    </a-form-item>
+                    <div class="card-right-top">
+                        <a-form-item class="right-form-item" path="categoryId[0]">
+                            <a-select placeholder="一级分区" v-model:value="form.categoryId[0]"
+                                :options="categorieOneOptions" @change="form.categoryId[1] = null" />
                         </a-form-item>
-                        <!-- <a-form-item label="摘要" path="description">
+                        <a-form-item class="right-form-item" path="categoryId[1]">
+                            <a-select placeholder="二级分区" clearable v-model:value="form.categoryId[1]"
+                                :options="categorieTwoOptions" />
+
+                        </a-form-item>
+
+                    </div>
+
+              <a-form-item label="摘要" path="description">
                         <a-input type="textarea" :placeholder="placeholder" v-model:value="form.description" />
-                    </a-form-item> -->
-                        <a-form-item v-if="form.categoryId[1] === 34">
-                            <a-checkbox v-model:checked="form.isMONFVote">
-                                参与MONF大赛打分
-                            </a-checkbox>
-                        </a-form-item>
-                        <a-form-item>
-                            <a-button @click="sendPost" type="info" block>
-                                发布
-                            </a-button>
-                        </a-form-item>
-                    </a-form>
+                    </a-form-item>
+                    <a-form-item v-if="form.categoryId[1] === 34">
+                        <a-checkbox v-model:checked="form.isMONFVote">
+                            参与MONF大赛打分
+                        </a-checkbox>
+                    </a-form-item>
+                    <a-form-item>
+                        <a-button @click="sendPost" type="primary" block>
+                            发布
+                        </a-button>
+                    </a-form-item>
+                </a-form>
 
-                </div>
             </div>
-        </div>
-    </ScrollView>
+        </div> -->
+    </div>
     <a-modal v-model:open="showSuccess">
         <div class="successCard">
             <h3>发表成功！</h3>
@@ -92,7 +88,7 @@
     </a-modal>
 </template>
 <script lang="ts" setup>
-import { message, UploadFile } from 'ant-design-vue';
+import { message, type UploadFile } from 'ant-design-vue';
 
 import type { FormProps } from "ant-design-vue"
 import { getCategories } from "@/apis/categorie";
@@ -100,9 +96,10 @@ import { NormalToolbar, MdEditor } from 'md-editor-v3';
 import type { ExposeParam, ToolbarNames } from "md-editor-v3"
 
 import confetti from "canvas-confetti"
-import { PostBody, setPost, setPostParams } from '@/apis/post';
+import { type PostBody, setPost, type setPostParams } from '@/apis/post';
 import { uploaderFile } from '@/apis/file';
 
+const route = useRoute()
 const router = useRouter()
 const showSuccess = ref(false)
 const editorRef = ref<ExposeParam>();
@@ -255,33 +252,13 @@ async function sendPost() {
 
 </script>
 <style lang="less" scoped>
-@media screen and (max-width: 1170px) {
-
-    .right {
-        // display: none;
-        width: 100% !important;
-        margin-left: 0 !important;
-    }
-
-    .creator-submit-m {
-        display: flex !important;
-    }
-
-    .creator {
-        flex-direction: column;
-    }
-}
-
-.creator-submit-m {
-    display: none;
-    margin-top: 16px;
-}
-
 .creator {
-    display: flex;
     width: 100%;
     min-height: 100%;
-    padding: 16px;
+
+    &-header {
+        height: 60px;
+    }
 }
 
 .BilibiliModel {
@@ -308,7 +285,7 @@ async function sendPost() {
 }
 
 .card-right {
-    background-color: var(--mug-card-bg);
+    background-color: #fff;
     border-radius: 6px;
     padding: 20px 30px;
     margin-bottom: 14px;
@@ -316,7 +293,6 @@ async function sendPost() {
 
     .card-right-top {
         display: flex;
-        margin-top: 20px;
     }
 
     h2 {
@@ -332,6 +308,7 @@ async function sendPost() {
     color: var(--mug-text);
     overflow: hidden;
     max-width: 1200px;
+    height: 100%;
     width: 100%;
     flex: 1;
     margin-bottom: 16px;
@@ -350,6 +327,7 @@ async function sendPost() {
     border: none;
     padding: 20px 20px 13px;
     width: 100%;
+    background-color: #fff;
 }
 
 

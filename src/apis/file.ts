@@ -17,7 +17,11 @@ export function uploaderFile(file: File) {
     const fd = new FormData()
     fd.append("file", file)
     return request.Post<InstanceBody<FileBody>>("/upload/file", {
-        method: "POST",
         data: fd,
+
+    }, {
+        meta: {
+            requiredLogin: true,
+        }
     });
 }

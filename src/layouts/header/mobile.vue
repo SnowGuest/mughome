@@ -21,7 +21,6 @@ function toSearch() {
         <div class="collectCloseMenu flex-center mr-auto" @click="closeMenu" v-show="layout?.open === 'fullscreen'">
             <i class="bi bi-x"></i>
         </div>
-        {{ layout?.open }}
         <div class="collectSearch flex-center " @click="toSearch">
             <i class="bi bi-search"></i>
         </div>

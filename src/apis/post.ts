@@ -4,7 +4,7 @@ import request from "@/utils/request";
 export interface PostsBody {
     includes: {
         users: User[];
-        // categories: Categorie[];
+        categories: Categorie[];
     };
     post: Post[];
 }

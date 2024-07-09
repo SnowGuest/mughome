@@ -21,6 +21,7 @@
     "default-passive-events": "^2.0.0",
     "less": "^4.2.0",
     "localforage": "^1.10.0",
+    "macy": "^2.5.1",
     "md-editor-v3": "^4.17.0",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",

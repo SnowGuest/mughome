@@ -12,6 +12,7 @@
     "types/categorie.d.ts",
     "types/auto-imports.d.ts",
     "types/components.d.ts",
+    "types/other.d.ts",
   ],
   "compilerOptions": {
     "jsxImportSource": "vue",
