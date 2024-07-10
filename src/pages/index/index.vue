@@ -9,7 +9,6 @@ import postBody from './components/postBody.vue';
 import { useAppStore } from '@/stores/app';
 
 import { Waterfall } from 'vue-waterfall-plugin-next'
-import 'vue-waterfall-plugin-next/dist/style.css'
 const userStore = useUserStore()
 const appStore = useAppStore()
 const layout = inject<LayoutProvide>("layout");
@@ -62,6 +61,7 @@ onMounted(() => {
     // });
 })
 const breakpoints = {
+    1920: { rowPerView: 4 },
     1250: { rowPerView: 3 },
     1000: { rowPerView: 2 },
     700: { rowPerView: 1 },

@@ -4,6 +4,7 @@ import './assets/main.css'
 import 'virtual:uno.css';
 import "bootstrap-icons/font/bootstrap-icons.min.css";
 import 'md-editor-v3/lib/style.css';
+import 'vue-waterfall-plugin-next/dist/style.css'
 
 import { createI18n } from 'vue-i18n'
 import { createApp } from 'vue'

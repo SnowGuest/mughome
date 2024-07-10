@@ -57,7 +57,7 @@ function updateList() {
             <div class="skeleton" v-show="loading">
                 <a-skeleton active />
             </div>
-            <Monf v-for="item in monfs" :item v-show="!loading" :id="item.id" :time="route.params.time"></Monf>
+            <Monf v-for="item in monfs" :item="item" v-show="!loading" :id="item.id" :time="route.params.time"></Monf>
         </div>
         <div class="right flex flex-col">
             <div class="card ">

@@ -74,6 +74,7 @@ function toDetali() {
         font-size: 14px;
         color: #999;
         cursor: pointer;
+        word-break: break-word;
     }
 }
 
