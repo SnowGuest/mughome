@@ -81,8 +81,7 @@ async function like() {
             <!-- <BilibiliCe :bvid="monf.bilibiliLink" /> -->
             <div class="container-footer flex items-center">
                 <div v-if="!appStore.isSelf(monf.createdUserId)" class="control control-like"
-                    :class="{ like: monf.relations?.isLiked }"
-                    @click.stop="monf?.relations?.isLiked ? unLike() : like()">
+                    :class="{ like: monf.relations?.isLiked }" @click.stop="monf?.relations?.isLiked ? unLike() : like()">
                     <i class="bi bi-heart-fill"></i>
                     {{ monf.likeCount }}
                 </div>
@@ -97,10 +96,12 @@ async function like() {
 .pageHeader {
     position: sticky;
     top: 0;
+    background-color: #FAF8F8;
 }
 
 .container {
     padding: 0 14px;
+    margin: 0 auto;
 
     .title {
         font-size: 24px;
