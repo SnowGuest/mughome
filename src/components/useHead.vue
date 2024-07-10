@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { storeToRefs } from "pinia"
 import { useUserStore } from '@/stores/users';
 import { followUserApi, getUser, unfollowUserApi } from '@/apis/user';
 import { message } from 'ant-design-vue';
@@ -6,9 +7,8 @@ const props = defineProps<{
     createdUserId: number;
     padding?: string;
 }>()
-const userStore = useUserStore();
-const user = userStore.userMap.get(props.createdUserId);
-
+const { userMap } = storeToRefs(useUserStore());
+const user = computed(() => userMap.value.get(props.createdUserId))
 function subscribed(userId?: User["id"], bool?: boolean) {
     if (typeof bool !== "boolean" || !userId) return;
     if (bool) followUserApi(userId)

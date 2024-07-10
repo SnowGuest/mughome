@@ -78,7 +78,7 @@ async function like() {
 
             <p class="intro">{{ monf.intro }}</p>
             <h3 class="label">演示</h3>
-            <BilibiliCe :bvid="monf.bilibiliLink" />
+            <!-- <BilibiliCe :bvid="monf.bilibiliLink" /> -->
             <div class="container-footer flex items-center">
                 <div v-if="!appStore.isSelf(monf.createdUserId)" class="control control-like"
                     :class="{ like: monf.relations?.isLiked }"

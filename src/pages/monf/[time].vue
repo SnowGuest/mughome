@@ -180,6 +180,7 @@ function updateList() {
     .right {
         position: static !important;
         width: 100% !important;
+        margin-bottom: 12px;
     }
 }
 </style>
