@@ -52,7 +52,7 @@ function updateList() {
 </script>
 
 <template>
-    <div class="container flex justify-center">
+    <div class="container ">
         <div class="monfs flex flex-col">
             <div class="skeleton" v-show="loading">
                 <a-skeleton active />
@@ -104,8 +104,11 @@ function updateList() {
 .container {
     padding: 40px 14px;
     margin: 0 auto;
-    column-gap: 10px;
-
+    display: grid;
+    column-gap: 20px;
+    grid-template-columns: minmax(0, 560px) minmax(300px, 34%);
+    margin: 0 auto;
+    justify-content: center;
     .link {
         padding: 14px 20px;
 
@@ -120,13 +123,14 @@ function updateList() {
         position: sticky;
         top: 16px;
         align-self: flex-start;
+        max-width: 100%;
+        width: 300px;
     }
 
     .card {
         background-color: #ffffff;
         border-radius: 4px;
-        max-width: 100%;
-        width: 300px;
+        width: 100%;
 
         &-body {
             padding: 14px 20px;
@@ -154,7 +158,7 @@ function updateList() {
 }
 
 .monfs {
-    width: 560px;
+    // width: 560px;
     max-width: 100%;
     row-gap: 14px;
 
@@ -164,5 +168,18 @@ function updateList() {
     background-color: #fff;
     padding: 16px;
     border-radius: 4px;
+}
+
+@media screen and (max-width:900px) {
+    .container {
+        display: flex;
+        padding: 0px 16px 0 !important;
+        flex-direction: column-reverse;
+    }
+
+    .right {
+        position: static !important;
+        width: 100% !important;
+    }
 }
 </style>
