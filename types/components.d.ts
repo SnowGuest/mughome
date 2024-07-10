@@ -42,6 +42,8 @@ declare module 'vue' {
     Line: typeof import('./../src/components/line.vue')['default']
     Loading: typeof import('./../src/components/loading.vue')['default']
     LoginModel: typeof import('./../src/components/loginModel.vue')['default']
+    MonfButon: typeof import('../src/components/monfButton.vue')['default']
+    MonfButton: typeof import('./../src/components/monfButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UseHead: typeof import('./../src/components/useHead.vue')['default']

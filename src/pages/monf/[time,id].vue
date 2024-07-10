@@ -6,12 +6,14 @@ import UseHead from '@/components/useHead.vue';
 import { useAppStore } from '@/stores/app';
 import { useUserStore } from '@/stores/users';
 import { message } from 'ant-design-vue';
+import monfButton from "@/components/monfButton.vue"
 const route = useRoute()
 const router = useRouter()
 const monf = ref<Monf>();
 const appStore = useAppStore();
 const userStore = useUserStore();
 const loading = ref(true);
+const openComment = ref(false)
 const columns = [{
     title: '昵称',
     dataIndex: 'memberName',
@@ -70,12 +72,12 @@ async function like() {
         <div class="container-body">
             <h2 class="title">{{ monf.songName }}</h2>
             <UseHead padding="0 0 20px 0" :createdUserId="monf.createdUserId" />
-            <h3 class="label">团队:</h3>
+            <h3 class="label">团队</h3>
             <a-table :pagination="false" :dataSource="monf.members" :columns="columns" />
-            <h3 class="label">歌曲简介:</h3>
+            <h3 class="label">歌曲简介</h3>
 
             <p class="intro">{{ monf.intro }}</p>
-            <h3 class="label">歌曲简介:</h3>
+            <h3 class="label">演示</h3>
             <BilibiliCe :bvid="monf.bilibiliLink" />
             <div class="container-footer flex items-center">
                 <div v-if="!appStore.isSelf(monf.createdUserId)" class="control control-like"
@@ -84,9 +86,7 @@ async function like() {
                     <i class="bi bi-heart-fill"></i>
                     {{ monf.likeCount }}
                 </div>
-                <div>
-                    打分
-                </div>
+                <monfButton @click="openComment = true"> 打分</monfButton>
             </div>
         </div>
 
@@ -106,6 +106,11 @@ async function like() {
         font-size: 24px;
         font-weight: bold;
         margin-bottom: 18px;
+    }
+
+    .label {
+        padding: 12px 0;
+        margin-top: 10px;
     }
 
     .intro {
@@ -130,6 +135,8 @@ async function like() {
         padding: 0 20px;
         column-gap: 14px;
         background-color: #F9F7F8;
+        margin-top: 50px;
+        border-top: 1px solid #dddddd;
     }
 }
 
