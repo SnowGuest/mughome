@@ -1,6 +1,6 @@
 <template>
     <div class="flex between" style="align-items: flex-end;">
-        <div class="CommentVote" v-if="vote" :class="{ CommentVoteSlashed: getSlashed() }">
+        <!-- <div class="CommentVote" v-if="vote" :class="{ CommentVoteSlashed: getSlashed() }">
             <h4 style="width:100%">作品评价</h4>
             <span style="white-space: nowrap;">
                 <span>谱面评分:</span>
@@ -17,7 +17,7 @@
             <template #reference>
                 <Icon name="ci:more-horizontal" class="moreMenu" />
             </template>
-        </Popover>
+        </Popover> -->
     </div>
 </template>
 

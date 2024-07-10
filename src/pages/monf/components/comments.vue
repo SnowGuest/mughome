@@ -1,6 +1,6 @@
 <template>
     <div class="commentCard column">
-        <div :immediate-check="false" @load="load_comment">
+        <!-- <div :immediate-check="false" @load="load_comment">
             <li v-for="[id, item] in comments" class="comment" v-show="!item.isHidden" :key="item.id">
                 <useHead />
                 <div class="commentBody">
@@ -17,7 +17,7 @@
 
             </li>
 
-        </div>
+        </div> -->
     </div>
 </template>
 
