@@ -22,164 +22,164 @@
 </template>
 
 <script lang="ts" setup>
-import useHead from "@/components/useHead.vue"
-import CommentVote from "./commentVote.vue"
-import dayjs from "dayjs";
-import { Image, Empty, showSuccessToast, showFailToast } from "vant"
-import { commentLike } from "@/api/comment";
-import { ArticleSortField, Comment, GetArticleParams, MonfVoteDetail } from '@/api/post';
-import { Monf, MonfComment, monfCommentLike, monfLike, monfunCommentLike, monfunLike } from '@/api/monf';
-import { getMonf2023Comment } from "@/api/monf";
-import { User } from "@/api/user";
-import { storeToRefs } from "pinia";
-import { useUserStore } from "@/stores/user";
-export interface MonfCommentAPI {
-    show: () => void
-}
-function showVote(comment: MonfComment) {
-    return typeof comment.chartScore === 'number' || typeof comment.musicScore === 'number'
-}
-interface Prop {
-    id: number | string;
-    myWorkId?: number;
-    editMonf: boolean;
-}
-const emits = defineEmits<{
-    (event: 'setMonfId', id: number): void
-}>()
-const commentId = ref<number>()
-const showComment = ref(false)
-defineExpose<MonfCommentAPI>({
-    show() {
-        showComment.value = true
-    },
-})
-const props = defineProps<Prop>();
+// import useHead from "@/components/useHead.vue"
+// import CommentVote from "./commentVote.vue"
+// import dayjs from "dayjs";
+// import { Image, Empty, showSuccessToast, showFailToast } from "vant"
+// import { commentLike } from "@/api/comment";
+// import { ArticleSortField, Comment, GetArticleParams, MonfVoteDetail } from '@/api/post';
+// import { Monf, MonfComment, monfCommentLike, monfLike, monfunCommentLike, monfunLike } from '@/api/monf';
+// import { getMonf2023Comment } from "@/api/monf";
+// import { User } from "@/api/user";
+// import { storeToRefs } from "pinia";
+// import { useUserStore } from "@/stores/user";
+// export interface MonfCommentAPI {
+//     show: () => void
+// }
+// function showVote(comment: MonfComment) {
+//     return typeof comment.chartScore === 'number' || typeof comment.musicScore === 'number'
+// }
+// interface Prop {
+//     id: number | string;
+//     myWorkId?: number;
+//     editMonf: boolean;
+// }
+// const emits = defineEmits<{
+//     (event: 'setMonfId', id: number): void
+// }>()
+// const commentId = ref<number>()
+// const showComment = ref(false)
+// defineExpose<MonfCommentAPI>({
+//     show() {
+//         showComment.value = true
+//     },
+// })
+// const props = defineProps<Prop>();
 
-const searchParams = reactive<GetArticleParams>({
-    sortField: ArticleSortField.createdDate,
-    sortType: "asc",
-    id: props.id,
-    page: 1,
-    pageSize: 10
-});
-async function loadComment() {
-    console.log(searchParams, '我是')
-    const { data } = await getMonf2023Comment("monf/comments", searchParams);
-    const status = reactive({
-        finished: false,
-        loading: true,
-        error: false
-    });
-    const users = getUserMap(data.value?.data.includes.users);
-    if (data.value?.data?.workComments && data.value?.data?.workComments?.length <= 0) {
-        status.loading = false;
-        status.finished = true
-    } else {
-        status.loading = false;
-        status.error = true
-    }
-    return { status, comments: ref(new Map(data.value?.data.workComments.map(e => [e.id, e]))), users }
-}
-
-
-const { status, users, comments } = await loadComment()
-
-function getUser(id: number) {
-    return users.get(id)
-}
-function getCreateTime(time: string) {
-    return dayjs(dayjs()).diff(time, "hour") > 12 ? dayjs(time).format("YYYY/MM/DD HH:mm") : dayjs(time).fromNow();
-}
-function comment(e: MonfComment) {
-    commentId.value = e.id;
-    showComment.value = true
-}
-
-async function putComment(user: User[], comment: MonfComment) {
-    getUserMap([...user], users);
-    if (typeof comment.relations?.parentCommentId === "number") {
-        const flag = comments.value.get(comment.relations?.parentCommentId)
-        if (!flag) return;
-        if (!Array.isArray(flag?.children)) flag.children = [];
-        flag?.children.push(comment)
-    } else if (comment && !comment.relations) {
-        comments.value.set(comment.id, comment)
-    }
-    emits("setMonfId", comment.id)
-}
+// const searchParams = reactive<GetArticleParams>({
+//     sortField: ArticleSortField.createdDate,
+//     sortType: "asc",
+//     id: props.id,
+//     page: 1,
+//     pageSize: 10
+// });
+// async function loadComment() {
+//     console.log(searchParams, '我是')
+//     const { data } = await getMonf2023Comment("monf/comments", searchParams);
+//     const status = reactive({
+//         finished: false,
+//         loading: true,
+//         error: false
+//     });
+//     const users = getUserMap(data.value?.data.includes.users);
+//     if (data.value?.data?.workComments && data.value?.data?.workComments?.length <= 0) {
+//         status.loading = false;
+//         status.finished = true
+//     } else {
+//         status.loading = false;
+//         status.error = true
+//     }
+//     return { status, comments: ref(new Map(data.value?.data.workComments.map(e => [e.id, e]))), users }
+// }
 
 
-const { logged } = storeToRefs(useUserStore())
-async function likeComment(comment: MonfComment) {
-    try {
-        if (!logged.value.login) {
+// const { status, users, comments } = await loadComment()
+
+// function getUser(id: number) {
+//     return users.get(id)
+// }
+// function getCreateTime(time: string) {
+//     return dayjs(dayjs()).diff(time, "hour") > 12 ? dayjs(time).format("YYYY/MM/DD HH:mm") : dayjs(time).fromNow();
+// }
+// function comment(e: MonfComment) {
+//     commentId.value = e.id;
+//     showComment.value = true
+// }
+
+// async function putComment(user: User[], comment: MonfComment) {
+//     getUserMap([...user], users);
+//     if (typeof comment.relations?.parentCommentId === "number") {
+//         const flag = comments.value.get(comment.relations?.parentCommentId)
+//         if (!flag) return;
+//         if (!Array.isArray(flag?.children)) flag.children = [];
+//         flag?.children.push(comment)
+//     } else if (comment && !comment.relations) {
+//         comments.value.set(comment.id, comment)
+//     }
+//     emits("setMonfId", comment.id)
+// }
 
 
-            showFailToast("请先登录"); return;
-        }
-        let isLike = Boolean(comment.relations?.isLiked)
-        console.log(isLike)
-        const { data } = await (isLike ? monfunCommentLike : monfCommentLike)(`monf/${isLike ? "monfunCommentLike" : "monfCommentLike"}/${comment.id}`, comment.id);
-        if (data.value?.code === 0) {
-            const sum = isLike ? -1 : 1;
-            if (!comment.relations) comment.relations = {}
-            comment.relations.isLiked = !isLike
-            showSuccessToast(isLike ? "取消点赞" : "点赞成功");
-            comment.likeCount += sum
-        }
+// const { logged } = storeToRefs(useUserStore())
+// async function likeComment(comment: MonfComment) {
+//     try {
+//         if (!logged.value.login) {
 
-    } catch (error) {
-        if (error instanceof Error) {
-            showFailToast(error.message)
-        }
-    }
-}
 
-async function load_comment() {
-    try {
-        if (status.loading) return;
-        if (!props.id) return;
-        if (typeof searchParams.page !== "number") return;
-        searchParams.page++;
-        status.loading = true
-        const { data } = await getMonf2023Comment("monf/comments/next", searchParams);
-        getUserMap(data.value?.data.includes.users, users);
-        data.value?.data.workComments.forEach(e => {
-            comments.value.set(e.id, e)
-        })
-        // if (result?.scores) scores.value = result.scores.value
-        status.finished = typeof data.value?.data.includes?.commentEnd === "boolean" ? data.value?.data.includes?.commentEnd : false
-    } finally {
-        status.loading = false
-    }
-}
-async function setCommentType(e: ArticleSortField) {
-    try {
-        if (!props.id) return;
-        const page = searchParams.page
-        const pageSize = searchParams.pageSize
-        searchParams.page = 1
-        searchParams.pageSize = comments.value.size;
-        searchParams.sortField = e;
-        status.finished = false;
-        status.loading = true;
-        comments.value.clear()
-        const { data } = await getMonf2023Comment("monf/comments/checkAction", searchParams);
-        data.value?.data.workComments.forEach(e => {
-            comments.value.set(e.id, e)
-        })
-        status.finished = typeof data.value?.data.includes?.commentEnd === "boolean" ? data.value?.data.includes?.commentEnd : false;
-        searchParams.page = page
-        searchParams.pageSize = pageSize
-    } finally {
-        status.loading = false;
-    }
+//             showFailToast("请先登录"); return;
+//         }
+//         let isLike = Boolean(comment.relations?.isLiked)
+//         console.log(isLike)
+//         const { data } = await (isLike ? monfunCommentLike : monfCommentLike)(`monf/${isLike ? "monfunCommentLike" : "monfCommentLike"}/${comment.id}`, comment.id);
+//         if (data.value?.code === 0) {
+//             const sum = isLike ? -1 : 1;
+//             if (!comment.relations) comment.relations = {}
+//             comment.relations.isLiked = !isLike
+//             showSuccessToast(isLike ? "取消点赞" : "点赞成功");
+//             comment.likeCount += sum
+//         }
 
-}
-function updateComment(newComment: MonfComment, oldComment: MonfComment) {
-    Object.assign(newComment, oldComment)
-}
+//     } catch (error) {
+//         if (error instanceof Error) {
+//             showFailToast(error.message)
+//         }
+//     }
+// }
+
+// async function load_comment() {
+//     try {
+//         if (status.loading) return;
+//         if (!props.id) return;
+//         if (typeof searchParams.page !== "number") return;
+//         searchParams.page++;
+//         status.loading = true
+//         const { data } = await getMonf2023Comment("monf/comments/next", searchParams);
+//         getUserMap(data.value?.data.includes.users, users);
+//         data.value?.data.workComments.forEach(e => {
+//             comments.value.set(e.id, e)
+//         })
+//         // if (result?.scores) scores.value = result.scores.value
+//         status.finished = typeof data.value?.data.includes?.commentEnd === "boolean" ? data.value?.data.includes?.commentEnd : false
+//     } finally {
+//         status.loading = false
+//     }
+// }
+// async function setCommentType(e: ArticleSortField) {
+//     try {
+//         if (!props.id) return;
+//         const page = searchParams.page
+//         const pageSize = searchParams.pageSize
+//         searchParams.page = 1
+//         searchParams.pageSize = comments.value.size;
+//         searchParams.sortField = e;
+//         status.finished = false;
+//         status.loading = true;
+//         comments.value.clear()
+//         const { data } = await getMonf2023Comment("monf/comments/checkAction", searchParams);
+//         data.value?.data.workComments.forEach(e => {
+//             comments.value.set(e.id, e)
+//         })
+//         status.finished = typeof data.value?.data.includes?.commentEnd === "boolean" ? data.value?.data.includes?.commentEnd : false;
+//         searchParams.page = page
+//         searchParams.pageSize = pageSize
+//     } finally {
+//         status.loading = false;
+//     }
+
+// }
+// function updateComment(newComment: MonfComment, oldComment: MonfComment) {
+//     Object.assign(newComment, oldComment)
+// }
 </script>
 <style lang="scss" scoped>
 .comment {

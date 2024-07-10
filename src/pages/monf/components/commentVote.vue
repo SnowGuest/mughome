@@ -22,48 +22,48 @@
 </template>
 
 <script lang="ts" setup>
-import { PopoverAction, showFailToast, showSuccessToast } from 'vant';
-import { MonfComment, cutOffTicketAPI } from '@/api/monf';
+// import { PopoverAction, showFailToast, showSuccessToast } from 'vant';
+// import { MonfComment, cutOffTicketAPI } from '@/api/monf';
 
-import { useUserStore } from '~/stores/user';
-import { Popover } from "vant"
-const prop = defineProps<{
-    vote?: MonfComment;
-}>()
-const emit = defineEmits<{
-    updateComment: [e: MonfComment]
-}>()
-function getSlashed() {
-    return prop.vote?.isSlashed
-}
-const actions = computed<PopoverAction[]>(() => {
-    const list = []
-    if (loginUser.userInfo && loginUser.userInfo?.role > 0) list.push({ id: "+1", text: "削票" })
-    return list
-})
-const loginUser = useUserStore();
-const arr = new Map<string, Function>([["+1", cutOffTicket]])
-function selectMenu(e: PopoverAction) {
-    const func = arr.get(e.id)
-    if (func) func()
-}
-async function cutOffTicket() {
-    if (getSlashed()) {
-        showFailToast("已经削过票了")
-        return;
-    }
-    if (loginUser.userInfo && loginUser.userInfo.role <= 0) return;
-    if (!prop.vote) return;
-    const message = prompt("请输入削票原因(选填)");
-    if (message === null) return;
-    const { data } = await cutOffTicketAPI(`/cutoffTicket/${prop.vote.id}`, `${prop.vote.id}`, message);
-    if (!data.value) return;
-    if (data.value.code === 0) {
-        emit("updateComment", data.value.data.workComment)
-        // ArticlePage?.setMoveDetali(data.value.data.id,)
-        showSuccessToast("削票成功")
-    }
-}
+// import { useUserStore } from '~/stores/user';
+// import { Popover } from "vant"
+// const prop = defineProps<{
+//     vote?: MonfComment;
+// }>()
+// const emit = defineEmits<{
+//     updateComment: [e: MonfComment]
+// }>()
+// function getSlashed() {
+//     return prop.vote?.isSlashed
+// }
+// const actions = computed<PopoverAction[]>(() => {
+//     const list = []
+//     if (loginUser.userInfo && loginUser.userInfo?.role > 0) list.push({ id: "+1", text: "削票" })
+//     return list
+// })
+// const loginUser = useUserStore();
+// const arr = new Map<string, Function>([["+1", cutOffTicket]])
+// function selectMenu(e: PopoverAction) {
+//     const func = arr.get(e.id)
+//     if (func) func()
+// }
+// async function cutOffTicket() {
+//     if (getSlashed()) {
+//         showFailToast("已经削过票了")
+//         return;
+//     }
+//     if (loginUser.userInfo && loginUser.userInfo.role <= 0) return;
+//     if (!prop.vote) return;
+//     const message = prompt("请输入削票原因(选填)");
+//     if (message === null) return;
+//     const { data } = await cutOffTicketAPI(`/cutoffTicket/${prop.vote.id}`, `${prop.vote.id}`, message);
+//     if (!data.value) return;
+//     if (data.value.code === 0) {
+//         emit("updateComment", data.value.data.workComment)
+//         // ArticlePage?.setMoveDetali(data.value.data.id,)
+//         showSuccessToast("削票成功")
+//     }
+// }
 </script>
 <style lang="scss" scoped>
 @media screen and (max-width: 1240px) {
