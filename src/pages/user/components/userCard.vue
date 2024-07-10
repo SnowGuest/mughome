@@ -38,8 +38,8 @@ const isSelf = typeof route.params.id === "string" ? appStore.isSelf(route.param
 </script>
 
 <template>
-    <div>
-        <div class="card flex flex-col rightCard" v-if="loadMode === 'success'">
+    <!-- <div> -->
+        <div class="card flex flex-col rightCard " v-if="loadMode === 'success'">
             <div class="flex-center flex-col" style="padding: 30px 0 20px;">
                 <a-avatar :size="128" :src="user?.avatarUrl"></a-avatar>
                 <div class="username">{{ user?.nickName }}</div>
@@ -84,7 +84,7 @@ const isSelf = typeof route.params.id === "string" ? appStore.isSelf(route.param
             <lineVue></lineVue>
             <a-skeleton-button active block style="padding: 20px 20px 10px;" />
         </div>
-    </div>
+    <!-- </div> -->
 </template>
 
 <style scoped lang="less">
@@ -92,7 +92,7 @@ const isSelf = typeof route.params.id === "string" ? appStore.isSelf(route.param
     /* width: 320px; */
     background-color: #ffffff;
     border-radius: 12px;
-
+    align-self: flex-start;
     .username {
         font-size: 22px;
         font-weight: bold;

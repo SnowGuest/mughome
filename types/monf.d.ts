@@ -2,7 +2,7 @@
 declare global {
 
 
-     interface MonfApplyMember {
+    interface MonfApplyMember {
         memberName: string,
         memberJob: string,
         memberMalodyUID?: number,
@@ -25,15 +25,18 @@ declare global {
         session: string;
         songName: string;
         teamName: string;
+        rank:string;
         isHidden?: boolean;
         isLiked?: boolean;
         lastCommentDate: string;
-        relations?: {
+        averageScore?: string;
+        score: string;
+        relations: {
             isLiked?: boolean;
             scoredCommentId?: number;
         }
 
     }
-  
+
 }
 export { } 

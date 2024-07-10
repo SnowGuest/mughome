@@ -3,10 +3,11 @@
 const router = useRouter();
 const layout = inject<LayoutProvide>("layout")
 function openMenu() {
-    layout?.changeSideBar("fullscreen")
+    layout?.changeSideBar("fullscreen");
+    
 }
 function closeMenu() {
-    layout?.changeSideBar("close")
+    layout?.changeSideBar("close");
 }
 function toSearch() {
     router.push("/search")

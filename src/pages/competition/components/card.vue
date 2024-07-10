@@ -1,0 +1,89 @@
+<script lang="ts" setup>
+
+const router = useRouter()
+const props = defineProps<{ item: any }>();
+const statusText = { start: "接收投稿中", stop: "已停止投稿", end: "已结束投稿" }
+function getStatusText(status: string) {
+    return statusText[status as keyof typeof statusText]
+}
+function toDetali() {
+    router.push(props.item.path)
+}
+</script>
+
+<template>
+    <div class="card flex flex-col" @click="toDetali">
+        <img src="../a.png" alt="" height="120" />
+        <div class="card-body flex flex-col flex-1">
+            <p :class="`status status-${item.status}`">
+                {{ getStatusText(item.status) }}
+            </p>
+            <p class="card-title">{{ item.title }}</p>
+            <p class="endDate">截稿日期: {{ item.endDate }}</p>
+        </div>
+        <div class="card-footer mt-a">
+            <a-avatar></a-avatar>
+            <span class="nickName">{{ item.userName }}</span>
+        </div>
+    </div>
+</template>
+
+<style scoped lang="less">
+.card {
+    background-color: #ffffff;
+    min-height: 290px;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.21s;
+
+    .status-start {
+        color: #1677FF;
+    }
+
+    .status-stop {
+        color: #ff6700;
+    }
+
+
+    .status-end {
+        color: red;
+    }
+
+    .status {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+
+    .endDate {
+        margin-top: auto;
+        color: #ccc;
+        font-size: 12px;
+        text-align: end;
+    }
+
+    &:hover {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+    }
+
+    &-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+
+    &-body {
+        padding: 12px;
+    }
+
+    &-footer {
+        padding: 12px;
+
+        .nickName {
+            font-size: 12px;
+            color: #aaa;
+            margin-left: 12px;
+        }
+    }
+}
+</style>

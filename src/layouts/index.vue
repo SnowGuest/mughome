@@ -8,6 +8,7 @@ const layout = reactive<LayoutProvide>({
     open: "opened",
     changeSideBar(mode) {
         layout.open = mode;
+
     },
     showloginMode() {
         loginModelInst.value?.showModel()
@@ -23,7 +24,6 @@ const sideBarWidth = computed(e => {
 const sideBarWidthRender = computed(_ => `${sideBarWidth.value}${sideBarWidth.value === 100 ? "vw" : "px"}`)
 const mql = window.matchMedia("(max-width:768px)");
 const mql2 = window.matchMedia("(max-width:1280px) and (min-width:768px)");
-console.log(mql.matches, mql2.matches)
 if (mql.matches) layout.open = "close"
 if (mql2.matches) layout.open = "small"
 mql.addEventListener("change", e => { if (e.matches) layout.open = "close" })
@@ -34,7 +34,7 @@ provide<LayoutProvide>("layout", layout)
 <template>
     <div class=" relative mughome flex-1">
         <sideBar />
-        <div class="main">
+        <div class="main" :class="{ noScroll: layout.open === 'fullscreen' }">
             <MugHeader />
             <router-view></router-view>
         </div>
@@ -42,12 +42,16 @@ provide<LayoutProvide>("layout", layout)
     <LoginModel ref="loginModelInst" />
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .mughome {
     max-height: 100%;
     width: 100%;
     height: 100%;
     --side-bar-width: v-bind(sideBarWidthRender);
+
+    &>.noScroll {
+        overflow: hidden;
+    }
 }
 
 

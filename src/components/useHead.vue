@@ -3,7 +3,8 @@ import { useUserStore } from '@/stores/users';
 import { followUserApi, getUser, unfollowUserApi } from '@/apis/user';
 import { message } from 'ant-design-vue';
 const props = defineProps<{
-    createdUserId: number
+    createdUserId: number;
+    padding?: string;
 }>()
 const userStore = useUserStore();
 const user = userStore.userMap.get(props.createdUserId);
@@ -17,7 +18,7 @@ function subscribed(userId?: User["id"], bool?: boolean) {
 </script>
 
 <template>
-    <div v-if="user" class="useHead flex items-center">
+    <div v-if="user" class="useHead flex items-center" :style="padding ? { padding } : {}">
         <a-avatar :src="user.avatarUrl" :size="48" class="avatar" />
         <div class="mr-a">
             <div class="nickName">{{ user.nickName }}</div>

@@ -9,7 +9,6 @@ import { createI18n } from 'vue-i18n'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import NProgress from 'nprogress'
-import 'default-passive-events';
 import App from './App.vue'
 import router from './router'
 import dayjs from 'dayjs/esm';

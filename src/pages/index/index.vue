@@ -4,7 +4,7 @@ import { getBanners } from '@/apis/pages';
 import { getPosts } from '@/apis/post';
 import { useUserStore } from '@/stores/users';
 import { usePagination } from 'alova/client';
-import useHead from './components/useHead.vue';
+import useHead from '@/components/useHead.vue';
 import postBody from './components/postBody.vue';
 import { useAppStore } from '@/stores/app';
 
@@ -16,7 +16,7 @@ const layout = inject<LayoutProvide>("layout");
 const banners = ref<Banner[]>([])
 async function loadBanner() {
     const result = await getBanners();
-    banners.value = result.data
+    banners.value = result.data.banners
 }
 loadBanner();
 const initLoading = ref(true)
@@ -32,7 +32,9 @@ const {
     {
         data: response => {
             userStore.setUsers(response.data.includes.users);
-            initLoading.value = false
+            setTimeout(() => {
+                initLoading.value = false
+            }, 500)
             return response.data.post
         },
         append: true,
@@ -68,17 +70,18 @@ const breakpoints = {
 
 <template>
     <div class="container">
-        <a-carousel v-if="banners.length > 0">
-            <div v-for="item in banners">
-                <img :src="item.imageUrl" :alt="item.description" />
+        <h3 class="title">热门资讯</h3>
+        <a-carousel v-if="banners.length > 0" :dots="false" autoplay>
+            <div v-for="item in banners" class="banner">
+                <img draggable="false" :src="item.imageUrl" :alt="item.description" />
             </div>
         </a-carousel>
         <h3 class="title">文章</h3>
-        <div style="padding: 16px 0;" v-show="loading">
+        <div style="padding: 16px 0;" v-show="initLoading">
             <a-skeleton active />
         </div>
 
-        <Waterfall :hasAroundGutter="false" v-show="!loading" backgroundColor="transparent" :list="data" :breakpoints="breakpoints"
+        <Waterfall :hasAroundGutter="false" backgroundColor="transparent" :list="data" :breakpoints="breakpoints"
             :crossOrigin="false" imgSelector="headerImage" :gutter="14" :animationDelay="0" :animationDuration="0"
             :posDuration="0">
             <template #item="{ item, url, index }">
@@ -130,5 +133,15 @@ const breakpoints = {
 
 .title {
     padding: 8px;
+}
+
+.banner {
+    width: 100%;
+
+    img {
+        height: 300px;
+        object-fit: cover;
+        margin: 0 auto;
+    }
 }
 </style>

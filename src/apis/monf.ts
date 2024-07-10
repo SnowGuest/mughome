@@ -18,16 +18,24 @@ interface MonfListBody {
     works: Monf[],
     includes: {
         users: User[]
-        comments?: Comment[]
+        workComments?: Comment[]
         categories?: Categorie[]
     }
 }
-interface MonfsParams extends PostParams {
+
+interface MonfBody {
+    work: Monf,
+    includes: {
+        users: User[]
+        workComments?: Comment[]
+    }
+}
+export interface MonfsParams {
     session?: "2023" | "2024"
 }
 
 /**
- * @GET 获取monf2023列表
+ * @GET 获取monf列表
  * */
 export function getMonfs(params: MonfsParams) {
     return request.Get<InstanceBody<MonfListBody>>("/event/monf/work", {
@@ -37,12 +45,22 @@ export function getMonfs(params: MonfsParams) {
 }
 
 /**
+ * @GET 获取monf
+ * */
+export function getMonf(workId: string | number) {
+    return request.Get<InstanceBody<MonfBody>>(`/event/monf/work/${workId}`, {
+        name: "getMonf"
+    })
+}
+
+
+/**
  * @GET monf点赞
  * */
 export function monfLike(monfWorkId: string | number) {
     return request.Get<InstanceBody<MonfListBody>>(`/event/monf/work/${monfWorkId}/like`, {
         hitSource: ["getMonfs"],
-        meta:{
+        meta: {
             requiredLogin: true,
         }
     }).send(true)
@@ -54,7 +72,7 @@ export function monfLike(monfWorkId: string | number) {
 export function monfunLike(monfWorkId: string | number) {
     return request.Get<InstanceBody<MonfListBody>>(`/event/monf/work/${monfWorkId}/like`, {
         hitSource: ["getMonfs"],
-        meta:{
+        meta: {
             requiredLogin: true,
         }
     }).send(true)
