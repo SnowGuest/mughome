@@ -31,7 +31,8 @@ interface MonfBody {
     }
 }
 export interface MonfsParams {
-    session?: "2023" | "2024"
+    session?: "2023" | "2024";
+    postUserId?:string;
 }
 
 /**

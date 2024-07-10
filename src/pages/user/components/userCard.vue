@@ -73,13 +73,13 @@ const isSelf = typeof route.params.id === "string" ? appStore.isSelf(route.param
             style="padding: 30px 0 20px;">
             <a-skeleton-avatar :loading="loadMode === 'loading'" active :size="128" shape="circle"
                 style="margin-bottom: 12px;" />
-            <a-skeleton-button :loading="loadMode === 'loading'" size="24" active style="margin-bottom: 12px;" />
-            <a-skeleton-button :loading="loadMode === 'loading'" size="5" active style="margin-bottom: 24px;" />
+            <a-skeleton-button :loading="loadMode === 'loading'" size="small" active style="margin-bottom: 12px;" />
+            <a-skeleton-button :loading="loadMode === 'loading'" size="small" active style="margin-bottom: 24px;" />
 
             <lineVue></lineVue>
             <div class="flex justify-around w[100%]" style="padding:20px 0">
-                <a-skeleton-button :loading="loadMode === 'loading'" size="20" active />
-                <a-skeleton-button :loading="loadMode === 'loading'" size="20" active />
+                <a-skeleton-button :loading="loadMode === 'loading'" size="small" active />
+                <a-skeleton-button :loading="loadMode === 'loading'" size="small" active />
             </div>
             <lineVue></lineVue>
             <a-skeleton-button active block style="padding: 20px 20px 10px;" />
