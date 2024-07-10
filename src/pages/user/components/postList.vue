@@ -21,7 +21,7 @@ const {
     reload
 } = usePagination<any, (Monf | Post)[]>(
     // Method实例获取函数，它将接收page和pageSize，并返回一个Method实例
-    (page, pageSize) => activeKey.value === 'post' ? getPosts({ page, pageSize, postUserId }) : getMonfs({ page, pageSize, postUserId }),
+    (page, pageSize) => activeKey.value === 'post' ? getPosts({ page, pageSize, postUserId }) : getMonfs({  postUserId }),
     {
         data: response => {
             initLoading.value = false
