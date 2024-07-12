@@ -1,19 +1,21 @@
 <script lang="ts" setup>
 
 const router = useRouter()
-const props = defineProps<{ item: any }>();
-const statusText = { start: "接收投稿中", stop: "已停止投稿", end: "已结束投稿" }
+const props = defineProps<{ item: any, noClick?: boolean }>();
+const statusText = { noStart: "尚未开始", start: "接收投稿中", stop: "已停止投稿", end: "已结束投稿" }
 function getStatusText(status: string) {
     return statusText[status as keyof typeof statusText]
 }
 function toDetali() {
-    router.push(props.item.path)
+    if (!props.noClick) {
+        router.push(props.item.path)
+    }
 }
 </script>
 
 <template>
-    <div class="card flex flex-col" @click="toDetali">
-        <img src="../a.png" alt="" height="120" />
+    <div :class="{ 'card-click': !noClick }" class="card flex flex-col" @click="toDetali">
+        <img :src="item.img" alt="" height="120" />
         <div class="card-body flex flex-col flex-1">
             <p :class="`status status-${item.status}`">
                 {{ getStatusText(item.status) }}
@@ -29,12 +31,15 @@ function toDetali() {
 </template>
 
 <style scoped lang="less">
+.card-click {
+    cursor: pointer;
+}
+
 .card {
     background-color: #ffffff;
     min-height: 290px;
     overflow: hidden;
     border-radius: 4px;
-    cursor: pointer;
     transition: all 0.21s;
 
     .status-start {
@@ -43,6 +48,10 @@ function toDetali() {
 
     .status-stop {
         color: #ff6700;
+    }
+
+    .status-noStart {
+        color: #aaa;
     }
 
 

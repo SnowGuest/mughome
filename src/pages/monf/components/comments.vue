@@ -11,7 +11,8 @@
                     <i class="bi bi-heart-fill"></i>
                     {{ monf.likeCount }}
                 </div>
-                <monfButton @click="commentModalInst?.open"> 打分</monfButton>
+                <monfButton @click="commentModalInst?.open"> {{ competition?.status === "start" ? '打分' : "评论" }}
+                </monfButton>
 
             </div>
             <ul class="commentCard flex flex-col">
@@ -25,7 +26,13 @@
                         <CommentVote @updateComment="e => updateComment(index, e)" v-if="showVote(item)"
                             :commentId="item.id" :vote="item" />
                         <div class="commentContent">{{ item.comment }}</div>
-                        <div class="commentControl align-center" :id="`commentControl${item.id}`">
+                        <div class="commentControl flex items-center" :id="`commentControl${item.id}`">
+                            <div v-if="!appStore.isSelf(item.createdUserId)" class="comment-control control-like"
+                                :class="{ like: item.relations?.isLiked }"
+                                @click.stop="item?.relations?.isLiked ? unCommentLike(item) : commmentLike(item)">
+                                <i class="bi bi-heart-fill"></i>
+                                {{ item.likeCount }}
+                            </div>
                             <time class="time">发布于 {{ getCreateTime(item.createdDate) }}</time>
                         </div>
                     </div>
@@ -40,30 +47,34 @@
 </template>
 
 <script lang="ts" setup>
-import { getMonfComments, monfLike, monfunLike } from '@/apis/monf';
+
+
+import { getMonfComments, monfLike, monfunLike, monfCommentunLike, monfCommentLike } from '@/apis/monf';
 import { useUserStore } from '@/stores/users';
-import { usePagination } from 'alova/client';
 import dayjs from 'dayjs/esm';
 import { storeToRefs } from 'pinia';
 import CommentVote from './commentVote.vue';
 import { useAppStore } from '@/stores/app';
 import { message } from 'ant-design-vue';
-import Loading from '@/components/loading.vue';
+import { useCompetition, type Competition } from '@/stores/competition';
+
 import CommentModal from './commentModal.vue';
 const commentModalInst = ref<{ open: () => void }>()
 const monf = defineModel<Monf>()
 const appStore = useAppStore();
-const openComment = ref(false)
 const userStore = useUserStore();
 const { userMap } = storeToRefs(userStore);
-const sortField = ref("likeCount")
-const initLoading = ref(true);
+const competitions = useCompetition()
+
+const competition = computed<Competition | undefined>(() => {
+    return competitions.getCompetition(Array.isArray(route.params.time) ? route.params.time.join("") : route.params.time, 'monf')
+})
 const route = useRoute();
 const loading = ref(false);
 const workId = Array.isArray(route.params.id) ? route.params.id.join(",") : route.params.id;
 const data = ref<MonfComment[]>([])
 async function loadMonfComment() {
-    const result = await getMonfComments({ sortField: sortField.value, workId });
+    const result = await getMonfComments({ workId });
     userStore.setUsers(result.data.includes.users);
     data.value = result.data.workComments
 }
@@ -102,6 +113,30 @@ async function like() {
     message.success("点赞成功")
 }
 
+async function unCommentLike(item: MonfComment) {
+    if (!item) return
+    await monfCommentunLike(item.id);
+    if (item.relations) {
+        item.relations.isLiked = false
+    }
+    if (item.likeCount > 0) item.likeCount--
+    message.info("取消点赞")
+}
+
+async function commmentLike(item: MonfComment) {
+    if (!item) return
+    await monfCommentLike(item.id)
+    item.likeCount++
+    if (item.relations) {
+        item.relations.isLiked = true
+    }
+    message.success("点赞成功")
+}
+
+
+
+
+
 
 </script>
 <style lang="less" scoped>
@@ -133,14 +168,18 @@ async function like() {
         line-height: 24px;
         word-break: break-all;
         padding-top: 12px;
+
     }
 
     .time {
         font-size: 12px;
         color: #aaa;
-        margin-top: 12px;
         display: block;
     }
+}
+
+.commentControl {
+    margin-top: 12px;
 }
 
 .comments {
@@ -157,6 +196,26 @@ async function like() {
     border-radius: 50px;
     width: 70px;
     height: 30px;
+    background-color: #ddd;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+    color: #5A5A5A;
+
+    i {
+        font-size: 14px;
+        margin-right: 6px;
+    }
+}
+
+.comment-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    width: 50px;
+    height: 28px;
+    margin-right: 10px;
     background-color: #ddd;
     font-weight: bold;
     font-size: 17px;

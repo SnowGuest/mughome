@@ -17,10 +17,14 @@ import date_zhCn from 'dayjs/esm/locale/zh-cn';
 import localeData from 'dayjs/esm/plugin/localeData'
 import relativeTime from "dayjs/esm/plugin/relativeTime";
 import customParseFormat from "dayjs/esm/plugin/customParseFormat";
+import isBetween from 'dayjs/esm/plugin/isBetween' // ES 2015
 import { getUserSystemLanguage, preloadAppConf } from './utils';
 import { getAllLanguage } from './lang';
 import zhCn from './lang/zh-cn.json';
 
+
+
+dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
 dayjs.locale(date_zhCn) // 全局使用
 dayjs.extend(relativeTime)

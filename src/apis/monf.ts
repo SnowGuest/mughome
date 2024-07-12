@@ -92,7 +92,6 @@ interface CutOffTicketBody {
 }
 interface getMonfCommentsParams {
     workId: string | number;
-    sortField: string
 }
 /**
  * @GET 获取monf评论
@@ -114,7 +113,7 @@ export function cutOffTicketAPI(workCommentId: string | number, reason: string) 
 }
 
 // monf更新评论
-export function monfCommentUpdate(workCommentId: string|number, params: MonfCommentParams) {
+export function monfCommentUpdate(workCommentId: string | number, params: MonfCommentParams) {
     return request.Patch<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/${workCommentId}`, {
         params
     }).send(true)
@@ -129,6 +128,17 @@ export interface MonfCommentParams {
 export function monfComment(params: MonfCommentParams) {
     return request.Post<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/publish`, {
         params
+    }).send(true)
+}
+
+// monf取消点赞
+export function monfCommentunLike(monfWorkCommentId: string | number) {
+    return request.Get<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/${monfWorkCommentId}/unlike`, {
+    }).send(true)
+}
+// monf点赞
+export function monfCommentLike(monfWorkCommentId: string | number) {
+    return request.Get<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/${monfWorkCommentId}/like`, {
     }).send(true)
 }
 

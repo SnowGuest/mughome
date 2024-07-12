@@ -9,10 +9,16 @@ const props = defineProps<{
 }>()
 const { userMap } = storeToRefs(useUserStore());
 const user = computed(() => userMap.value.get(props.createdUserId))
-function subscribed(userId?: User["id"], bool?: boolean) {
-    if (typeof bool !== "boolean" || !userId) return;
-    if (bool) followUserApi(userId)
-    else unfollowUserApi(userId)
+async function subscribed(userId?: User["id"], bool?: boolean) {
+    try {
+        console.log(userId, bool, typeof bool !== "boolean", !userId)
+        if (typeof bool !== "boolean" || !userId) return;
+        if (bool) await followUserApi(userId)
+        else await unfollowUserApi(userId)
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 </script>

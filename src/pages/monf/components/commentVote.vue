@@ -11,10 +11,9 @@
             <div class="CommentVoteShash" v-if="getSlashed()">
                 削票原因:{{ vote.slashReason || "无" }}
             </div>
+
         </div>
-
-
-        <a-dropdown v-if="appStore.userInfo && appStore.userInfo?.role > 0">
+        <a-dropdown class="dropdown" v-if="appStore.userInfo && appStore.userInfo?.role > 0">
             <a class="ant-dropdown-link" @click.prevent>
                 <i class="bi bi-list"></i>
             </a>
@@ -70,7 +69,12 @@ async function cutOffTicket() {
         min-width: 260px;
     }
 }
-
+.dropdown{
+    align-self: flex-start;
+    margin-top: 14px;
+    padding: 6px;
+    transform: translateX(-100%);
+}
 .CommentVote {
     display: flex;
     padding: 10px 14px;

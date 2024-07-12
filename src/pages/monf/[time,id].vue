@@ -53,6 +53,7 @@ if (typeof route.params.id === "string") {
 
 <template>
     <a-page-header title="返回" @back=" $router.back" class="pageHeader" />
+
     <div class="skeleton" v-show="loading">
         <a-skeleton active />
     </div>
@@ -66,8 +67,7 @@ if (typeof route.params.id === "string") {
 
             <p class="intro">{{ monf.intro }}</p>
             <h3 class="label">演示</h3>
-            <!-- <BilibiliCe :bvid="monf.bilibiliLink" /> -->
-
+            <BilibiliCe :bvid="monf.bilibiliLink" />
         </div>
     </div>
     <comments v-model="monf" />

@@ -2,7 +2,10 @@
 import { getMonfs, type MonfsParams } from '@/apis/monf';
 import { useUserStore } from '@/stores/users';
 import { usePagination } from 'alova/client';
+
 import Monf from './components/monf.vue';
+import { useCompetition, type Competition } from '@/stores/competition';
+const competitions = useCompetition()
 const filter = ref<string[]>([])
 const options = [{
     value: 'averageScore',
@@ -49,6 +52,9 @@ function updateList() {
         loading.value = false;
     }, 2000 - (Date.now() - time))
 }
+const competition = computed<Competition | undefined>(() => {
+    return competitions.getCompetition(Array.isArray(route.params.time) ? route.params.time.join("") : route.params.time, 'monf')
+})
 </script>
 
 <template>
@@ -60,7 +66,7 @@ function updateList() {
             <Monf v-for="item in monfs" :item="item" v-show="!loading" :id="item.id" :time="route.params.time"></Monf>
         </div>
         <div class="right flex flex-col">
-            <div class="card ">
+            <div class="card " v-if="competition?.status === 'start'">
                 <div class="card-body">
                     <router-link to="/creater/monf">
                         <a-button type="primary" block size="large">
@@ -69,6 +75,9 @@ function updateList() {
                         </a-button>
                     </router-link>
                 </div>
+            </div>
+            <div class="card" v-else>
+                <div class="card-body">{{ competition?.status === 'stop' ? '已截至投稿' : '赛事已结束' }}</div>
             </div>
             <a class="card  flex justify-between link" href="https://www.bilibili.com/read/cv24413136/" target="_blank">
                 <span>查看比赛规则</span>
@@ -109,6 +118,7 @@ function updateList() {
     grid-template-columns: minmax(0, 560px) minmax(300px, 34%);
     margin: 0 auto;
     justify-content: center;
+
     .link {
         padding: 14px 20px;
 
