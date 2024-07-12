@@ -64,6 +64,7 @@ const competition = computed<Competition | undefined>(() => {
                 <a-skeleton active />
             </div>
             <Monf v-for="item in monfs" :item="item" v-show="!loading" :id="item.id" :time="route.params.time"></Monf>
+            <a-empty description="暂无投稿" class="monf-empty" v-if="monfs.length <= 0 && !loading" />
         </div>
         <div class="right flex flex-col">
             <div class="card " v-if="competition?.status === 'start'">
@@ -77,7 +78,8 @@ const competition = computed<Competition | undefined>(() => {
                 </div>
             </div>
             <div class="card" v-else>
-                <div class="card-body">{{ competition?.status === 'stop' ? '已截至投稿' : '赛事已结束' }}</div>
+                <div class="card-body">{{ competition?.status === "noStart" ? "比赛尚未开始" : competition?.status === 'stop'
+                    ? '已截至投稿' : '赛事已结束' }}</div>
             </div>
             <a class="card  flex justify-between link" href="https://www.bilibili.com/read/cv24413136/" target="_blank">
                 <span>查看比赛规则</span>
@@ -192,5 +194,11 @@ const competition = computed<Competition | undefined>(() => {
         width: 100% !important;
         margin-bottom: 12px;
     }
+}
+
+.monf-empty {
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 30px 0;
 }
 </style>
