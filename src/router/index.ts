@@ -18,6 +18,8 @@ const router = createRouter({
       { path: "user/:id", component: () => import("@/pages/user/[id].vue") }, // 用户详情
       { path: "setting", component: () => import("@/pages/setting/index.vue") }, // 个人中心
       { path: "noAuth", component: () => import("@/pages/noAuth/index.vue") }, // 无身份验证
+      { path: "/creator/monf/:time(\\d+)", component: () => import("@/pages/monf/creator[time].vue") }, // 发布monf
+      { path: "/error/monf/:time(\\d+)", component: () => import("@/pages/monf/error[time].vue") }, // 发布monf
     ]
   }, {
     path: "/search",
@@ -26,13 +28,10 @@ const router = createRouter({
     path: "/account/signin",
     component: () => import("@/pages/account/signin.vue")
   },
-  {
-    path: "/creator/monf",
-    component: () => import("@/pages/monf/creator.vue")
-  },
-  
-  // { path: "/creator/:id?", component: () => import("@/pages/creator/index.vue") }, // 发帖/编辑
-  // { path: "/editer/:id?", component: () => import("@/pages/creator/index.vue") }, // 发帖/编辑
+
+
+    // { path: "/creator/:id?", component: () => import("@/pages/creator/index.vue") }, // 发帖/编辑
+    // { path: "/editer/:id?", component: () => import("@/pages/creator/index.vue") }, // 发帖/编辑
   ]
 })
 

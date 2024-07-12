@@ -11,7 +11,20 @@ export interface MonfApplyBody {
     }
 }
 
-
+export interface MonfPublishParams {
+    teamName: string,
+    songName: string,
+    malodySID: string,
+    intro: string,
+    members: MonfPublishMember[],
+    bilibiliLink: string,
+    session?: "2023" | "2024";
+}
+export interface MonfPublishMember {
+    memberName: string,
+    memberJob: string,
+    memberMalodyUID?: number,
+}
 
 
 interface MonfListBody {
@@ -98,7 +111,7 @@ interface getMonfCommentsParams {
  * */
 export function getMonfComments(params: getMonfCommentsParams) {
     return request.Get<InstanceBody<MonfCommentsBody>>(`/event/monf/work/${params.workId}/comment`, {
-        params
+        params,
     })
 }
 /**
@@ -142,4 +155,10 @@ export function monfCommentLike(monfWorkCommentId: string | number) {
     }).send(true)
 }
 
-
+// monf发布
+export function monfPublish(body: MonfPublishParams) {
+    return request.Post<InstanceBody<MonfBody>>(`event/monf/work/publish`, {
+        hitSource: ["getMonfs"],
+        body
+    }).send(true)
+}
