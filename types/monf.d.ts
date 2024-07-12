@@ -25,7 +25,7 @@ declare global {
         session: string;
         songName: string;
         teamName: string;
-        rank:string;
+        rank: string;
         isHidden?: boolean;
         isLiked?: boolean;
         lastCommentDate: string;
@@ -37,6 +37,22 @@ declare global {
         }
 
     }
-
+    interface MonfComment {
+        id: number,
+        comment: string,
+        createdUserId: number,
+        createdDate: string,
+        workId: number,
+        isSlashed: boolean,
+        slashReason: string,
+        slashedDate: string,
+        slashedUserId: string,
+        musicScore: number,
+        chartScore: number,
+        likeCount: number,
+        relations?: {
+            isLiked: boolean
+        }
+    }
 }
 export { } 

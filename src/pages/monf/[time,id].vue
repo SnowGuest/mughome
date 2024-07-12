@@ -1,19 +1,20 @@
 <!--  -->
 <script lang="ts" setup>
-import { getMonf, monfLike, monfunLike } from '@/apis/monf';
+import { getMonf, getMonfComments, monfLike, monfunLike } from '@/apis/monf';
 import BilibiliCe from '@/components/bilibili.vue';
 import UseHead from '@/components/useHead.vue';
 import { useAppStore } from '@/stores/app';
 import { useUserStore } from '@/stores/users';
 import { message } from 'ant-design-vue';
 import monfButton from "@/components/monfButton.vue"
+import comments from './components/comments.vue';
 const route = useRoute()
 const router = useRouter()
 const monf = ref<Monf>();
 const appStore = useAppStore();
 const userStore = useUserStore();
 const loading = ref(true);
-const openComment = ref(false)
+const openComment = ref(false);
 const columns = [{
     title: '昵称',
     dataIndex: 'memberName',
@@ -37,30 +38,17 @@ async function loadMonf(id: string) {
     }
 
 }
+
 if (typeof route.params.id === "string") {
-    loadMonf(route.params.id)
+    loadMonf(route.params.id);
 } else {
     router.replace("/noPage")
 }
-async function unLike() {
-    if (!monf.value) return
-    await monfunLike(monf.value.id);
-    if (monf.value.relations) {
-        monf.value.relations.isLiked = false
-    }
-    if (monf.value.likeCount > 0) monf.value.likeCount--
-    message.info("取消点赞")
-}
 
-async function like() {
-    if (!monf.value) return
-    await monfLike(monf.value.id)
-    monf.value.likeCount++
-    if (monf.value.relations) {
-        monf.value.relations.isLiked = true
-    }
-    message.success("点赞成功")
-}
+
+
+
+
 </script>
 
 <template>
@@ -79,17 +67,12 @@ async function like() {
             <p class="intro">{{ monf.intro }}</p>
             <h3 class="label">演示</h3>
             <!-- <BilibiliCe :bvid="monf.bilibiliLink" /> -->
-            <div class="container-footer flex items-center">
-                <div v-if="!appStore.isSelf(monf.createdUserId)" class="control control-like"
-                    :class="{ like: monf.relations?.isLiked }" @click.stop="monf?.relations?.isLiked ? unLike() : like()">
-                    <i class="bi bi-heart-fill"></i>
-                    {{ monf.likeCount }}
-                </div>
-                <monfButton @click="openComment = true"> 打分</monfButton>
-            </div>
-        </div>
 
+        </div>
     </div>
+    <comments v-model="monf" />
+
+
 </template>
 
 <style scoped lang="less">
@@ -97,6 +80,7 @@ async function like() {
     position: sticky;
     top: 0;
     background-color: #FAF8F8;
+    z-index: 2;
 }
 
 .container {
@@ -129,45 +113,9 @@ async function like() {
         margin: 0 auto;
     }
 
-    &-footer {
-        position: sticky;
-        bottom: 0;
-        height: 50px;
-        padding: 0 20px;
-        column-gap: 14px;
-        background-color: #F9F7F8;
-        margin-top: 50px;
-        border-top: 1px solid #dddddd;
-    }
+  
 }
-
-.control {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50px;
-    width: 70px;
-    height: 30px;
-    background-color: #ddd;
-    font-weight: bold;
-    font-size: 17px;
-    cursor: pointer;
-    color: #5A5A5A;
-
-    i {
-        font-size: 14px;
-        margin-right: 6px;
-    }
-}
-
-.control-like {
-    i {
-        font-size: 13px;
-    }
-}
-
-.like {
-    background-color: #fd4c2c;
-    color: #FFFFFF;
+.skeleton{
+    padding: 12px 20px;
 }
 </style>

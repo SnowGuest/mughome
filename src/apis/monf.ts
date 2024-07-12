@@ -32,7 +32,7 @@ interface MonfBody {
 }
 export interface MonfsParams {
     session?: "2023" | "2024";
-    postUserId?:string;
+    postUserId?: string;
 }
 
 /**
@@ -78,3 +78,58 @@ export function monfunLike(monfWorkId: string | number) {
         }
     }).send(true)
 }
+
+interface MonfCommentsBody {
+    workComments: MonfComment[];
+    includes: {
+        users: User[];
+        categories: Categorie[];
+        comments: [];
+    }
+}
+interface CutOffTicketBody {
+    workComment: MonfComment;
+}
+interface getMonfCommentsParams {
+    workId: string | number;
+    sortField: string
+}
+/**
+ * @GET 获取monf评论
+ * */
+export function getMonfComments(params: getMonfCommentsParams) {
+    return request.Get<InstanceBody<MonfCommentsBody>>(`/event/monf/work/${params.workId}/comment`, {
+        params
+    })
+}
+/**
+ * @GET 削票
+ * */
+export function cutOffTicketAPI(workCommentId: string | number, reason: string) {
+    return request.Get<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/${workCommentId}/slash`, {
+        params: {
+            reason
+        }
+    }).send(true)
+}
+
+// monf更新评论
+export function monfCommentUpdate(workCommentId: string|number, params: MonfCommentParams) {
+    return request.Patch<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/${workCommentId}`, {
+        params
+    }).send(true)
+}
+export interface MonfCommentParams {
+    workId: number | string,
+    comment: string,
+    musicScore?: number,
+    chartScore?: number
+}
+// monf评论
+export function monfComment(params: MonfCommentParams) {
+    return request.Post<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/publish`, {
+        params
+    }).send(true)
+}
+
+

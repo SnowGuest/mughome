@@ -1,6 +1,6 @@
 <template>
     <div class="flex between" style="align-items: flex-end;">
-        <!-- <div class="CommentVote" v-if="vote" :class="{ CommentVoteSlashed: getSlashed() }">
+        <div class="CommentVote" v-if="vote" :class="{ CommentVoteSlashed: getSlashed() }">
             <h4 style="width:100%">作品评价</h4>
             <span style="white-space: nowrap;">
                 <span>谱面评分:</span>
@@ -12,60 +12,59 @@
                 削票原因:{{ vote.slashReason || "无" }}
             </div>
         </div>
-        <div v-else></div>
-        <Popover :actions="actions" @select="selectMenu" v-if="loginUser.userInfo && loginUser.userInfo?.role > 0">
-            <template #reference>
-                <Icon name="ci:more-horizontal" class="moreMenu" />
+
+
+        <a-dropdown v-if="appStore.userInfo && appStore.userInfo?.role > 0">
+            <a class="ant-dropdown-link" @click.prevent>
+                <i class="bi bi-list"></i>
+            </a>
+            <template #overlay>
+                <a-menu @click="cutOffTicket">
+                    <a-menu-item>
+                        削票
+                    </a-menu-item>
+                </a-menu>
             </template>
-        </Popover> -->
+        </a-dropdown>
     </div>
 </template>
 
 <script lang="ts" setup>
-// import { PopoverAction, showFailToast, showSuccessToast } from 'vant';
-// import { MonfComment, cutOffTicketAPI } from '@/api/monf';
+import { cutOffTicketAPI } from '@/apis/monf';
+import { useAppStore } from '@/stores/app';
+import { message } from 'ant-design-vue';
 
-// import { useUserStore } from '~/stores/user';
-// import { Popover } from "vant"
-// const prop = defineProps<{
-//     vote?: MonfComment;
-// }>()
-// const emit = defineEmits<{
-//     updateComment: [e: MonfComment]
-// }>()
-// function getSlashed() {
-//     return prop.vote?.isSlashed
-// }
-// const actions = computed<PopoverAction[]>(() => {
-//     const list = []
-//     if (loginUser.userInfo && loginUser.userInfo?.role > 0) list.push({ id: "+1", text: "削票" })
-//     return list
-// })
-// const loginUser = useUserStore();
-// const arr = new Map<string, Function>([["+1", cutOffTicket]])
-// function selectMenu(e: PopoverAction) {
-//     const func = arr.get(e.id)
-//     if (func) func()
-// }
-// async function cutOffTicket() {
-//     if (getSlashed()) {
-//         showFailToast("已经削过票了")
-//         return;
-//     }
-//     if (loginUser.userInfo && loginUser.userInfo.role <= 0) return;
-//     if (!prop.vote) return;
-//     const message = prompt("请输入削票原因(选填)");
-//     if (message === null) return;
-//     const { data } = await cutOffTicketAPI(`/cutoffTicket/${prop.vote.id}`, `${prop.vote.id}`, message);
-//     if (!data.value) return;
-//     if (data.value.code === 0) {
-//         emit("updateComment", data.value.data.workComment)
-//         // ArticlePage?.setMoveDetali(data.value.data.id,)
-//         showSuccessToast("削票成功")
-//     }
-// }
+const appStore = useAppStore()
+
+const prop = defineProps<{
+    vote?: MonfComment;
+}>()
+const emit = defineEmits<{
+    updateComment: [e: MonfComment]
+}>()
+function getSlashed() {
+    return prop.vote?.isSlashed
+}
+
+
+async function cutOffTicket() {
+    if (getSlashed()) {
+        message.warn("已经削过票了")
+        return;
+    }
+    if (appStore.userInfo && appStore.userInfo.role <= 0) return;
+    if (!prop.vote) return;
+    const message1 = prompt("请输入削票原因(选填)");
+    if (message1 === null) return;
+    const result = await cutOffTicketAPI(`${prop.vote.id}`, message1);
+    if (result.code === 0) {
+        emit("updateComment", result.data.workComment)
+        // ArticlePage?.setMoveDetali(data.value.data.id,)
+        message.success("削票成功")
+    }
+}
 </script>
-<style lang="scss" scoped>
+<style lang="less" scoped>
 @media screen and (max-width: 1240px) {
     .CommentVote {
         min-width: 260px;
