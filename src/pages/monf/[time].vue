@@ -5,6 +5,7 @@ import { usePagination } from 'alova/client';
 
 import Monf from './components/monf.vue';
 import { useCompetition, type Competition } from '@/stores/competition';
+import dayjs from 'dayjs/esm';
 const competitions = useCompetition()
 const filter = ref<string[]>([])
 const options = [{
@@ -40,17 +41,26 @@ async function loadMonfs() {
     loading.value = false
 }
 loadMonfs();
-function updateList() {
+async function updateList() {
     const time = Date.now();
     loading.value = true;
-    const key = filter.value[0] as "averageScore" | "score" | "rank" | "createdDate"
-    const sort = filter.value[1]
-    setTimeout(() => {
-        monfs.value.sort((a, b) => {
-            return sort == "up" ? Number(`${a[key]}`) - Number(`${b[key]}`) : Number(`${b[key]}`) - Number(`${a[key]}`)
-        })
+    if (Array.isArray(filter.value) && filter.value.length === 2) {
+        const key = filter.value[0] as "averageScore" | "score" | "rank" | "createdDate"
+        const sort = filter.value[1]
+        setTimeout(() => {
+            monfs.value.sort((a, b) => {
+                if (key === "createdDate") {
+                    return sort == "up" ? dayjs(`${a[key]}`).valueOf() - dayjs(`${b[key]}`).valueOf() : dayjs(`${b[key]}`).valueOf() - dayjs(`${a[key]}`).valueOf()
+                }
+                return sort == "up" ? Number(`${a[key]}`) - Number(`${b[key]}`) : Number(`${b[key]}`) - Number(`${a[key]}`)
+            })
+            loading.value = false;
+        }, 2000 - (Date.now() - time))
+    } else {
+        await loadMonfs();
         loading.value = false;
-    }, 2000 - (Date.now() - time))
+    }
+
 }
 const competition = computed<Competition | undefined>(() => {
     return competitions.getCompetition(Array.isArray(route.params.time) ? route.params.time.join("") : route.params.time, 'monf')
@@ -117,7 +127,7 @@ const competition = computed<Competition | undefined>(() => {
     margin: 0 auto;
     display: grid;
     column-gap: 20px;
-    grid-template-columns: minmax(0, 560px) minmax(300px, 34%);
+    grid-template-columns: minmax(0, 600px) minmax(300px, 34%);
     margin: 0 auto;
     justify-content: center;
 

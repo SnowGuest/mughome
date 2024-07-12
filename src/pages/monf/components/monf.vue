@@ -36,6 +36,15 @@ function toDetali() {
             <h4 class="monf-title" @click="toDetali">{{ item.songName }}</h4>
             <p class="monf-intro" @click="toDetali">{{ item.intro.length > 120 ? item.intro.slice(0, 120) + '...' :
                 item.intro }}</p>
+
+        </div>
+        <div class="footerTags">
+            <a-tag color="pink">平均分：{{ (Number(item.chartScoreAvg) + Number(item.musicScoreAvg)).toFixed(2) }}</a-tag>
+            <a-tag color="red">总分：{{ item.chartScoreTotal + item.musicScoreTotal }}</a-tag>
+            <a-tag color="orange">谱面平均分：{{ item.chartScoreAvg.toFixed(2) }}</a-tag>
+            <a-tag color="green">谱面总分：{{ item.chartScoreTotal }}</a-tag>
+            <a-tag color="cyan">音乐平均分：{{ item.musicScoreAvg.toFixed(2) }}</a-tag>
+            <a-tag color="blue">音乐总分：{{ item.musicScoreTotal }}</a-tag>
         </div>
         <div class="monf-footer flex items-center">
             <div v-if="!appStore.isSelf(item.createdUserId)" class="control control-like"
@@ -45,6 +54,7 @@ function toDetali() {
                 {{ item.likeCount }}
             </div>
             <div style="margin: 0 auto;"></div>
+
             <span class="monf-pepole mr-2">谱面评分人数 : {{ item.chartScoreCount }}</span>
             <span class="monf-pepole">音乐评分人数 : {{ item.musicScoreCount }}</span>
         </div>
@@ -84,8 +94,7 @@ function toDetali() {
 }
 
 .monf-footer {
-    margin-top: auto;
-    padding: 16px;
+    padding: 0 16px 16px;
 }
 
 .control {
@@ -112,6 +121,14 @@ function toDetali() {
     i {
         font-size: 13px;
     }
+}
+
+.footerTags {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    padding: 0 16px 10px;
+    margin-top: auto;
 }
 
 .like {

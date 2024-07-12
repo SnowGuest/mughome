@@ -1,18 +1,19 @@
 <template>
-
-
     <div class="comments container" v-if="!loading && monf">
 
         <div class="container-body">
             <div class="container-footer flex items-center">
                 <div v-if="!appStore.isSelf(monf.createdUserId)" class="control control-like"
-                    :class="{ like: monf.relations?.isLiked }"
-                    @click.stop="monf?.relations?.isLiked ? unLike() : like()">
+                    :class="{ like: monf.relations?.isLiked }" @click.stop="monf?.relations?.isLiked ? unLike() : like()">
                     <i class="bi bi-heart-fill"></i>
                     {{ monf.likeCount }}
                 </div>
                 <monfButton @click="commentModalInst?.open"> {{ competition?.status === "start" ? '打分' : "评论" }}
                 </monfButton>
+                <div class="footerList">
+                    音乐打分人数：{{ monf.musicScoreCount }}
+                    谱面打分人数：{{ monf.chartScoreCount }}
+                </div>
 
             </div>
             <ul class="commentCard flex flex-col">
@@ -44,7 +45,6 @@
     </div>
     <CommentModal ref="commentModalInst" :update="editComment" :monfId="monf?.id"
         :myWorkId="monf?.relations?.scoredCommentId" />
-
 </template>
 
 <script lang="ts" setup>
@@ -256,10 +256,19 @@ async function commmentLike(item: MonfComment) {
     // background-color: #F9F7F8;
     border-bottom: 1px solid #dddddd;
 }
-.endText{
+
+.endText {
     text-align: center;
     font-size: 12px;
     padding: 8px 0;
-    color: #999;   
+    color: #999;
+}
+
+.footerList {
+    color: #aaa;
+    font-size: 12px;
+    text-align: end;
+    padding: 12px 0;
+    margin-left: auto;
 }
 </style>

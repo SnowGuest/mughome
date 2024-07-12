@@ -68,11 +68,17 @@ if (typeof route.params.id === "string") {
             <p class="intro">{{ monf.intro }}</p>
             <h3 class="label">演示</h3>
             <BilibiliCe :bvid="monf.bilibiliLink" />
+            <div class="footerTags">
+                <a-tag color="pink">平均分：{{ (Number(monf.chartScoreAvg) + Number(monf.musicScoreAvg)).toFixed(2) }}</a-tag>
+                <a-tag color="red">总分：{{ monf.chartScoreTotal + monf.musicScoreTotal }}</a-tag>
+                <a-tag color="orange">谱面平均分：{{ monf.chartScoreAvg.toFixed(2) }}</a-tag>
+                <a-tag color="green">谱面总分：{{ monf.chartScoreTotal }}</a-tag>
+                <a-tag color="cyan">音乐平均分：{{ monf.musicScoreAvg.toFixed(2) }}</a-tag>
+                <a-tag color="blue">音乐总分：{{ monf.musicScoreTotal }}</a-tag>
+            </div>
         </div>
     </div>
     <comments v-model="monf" />
-
-
 </template>
 
 <style scoped lang="less">
@@ -113,9 +119,15 @@ if (typeof route.params.id === "string") {
         margin: 0 auto;
     }
 
-  
+
 }
-.skeleton{
+
+.footerTags {
+    display: flex;
+    padding: 12px 0;
+}
+
+.skeleton {
     padding: 12px 20px;
 }
 </style>
