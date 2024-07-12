@@ -139,6 +139,7 @@ const breakpoints = {
     width: 100%;
 
     img {
+        max-width: 100%;
         height: 300px;
         object-fit: cover;
         margin: 0 auto;

@@ -38,6 +38,7 @@
                     </div>
                 </li>
             </ul>
+            <div class="endText">已经到底了~</div>
         </div>
 
     </div>
@@ -254,5 +255,11 @@ async function commmentLike(item: MonfComment) {
     column-gap: 14px;
     // background-color: #F9F7F8;
     border-bottom: 1px solid #dddddd;
+}
+.endText{
+    text-align: center;
+    font-size: 12px;
+    padding: 8px 0;
+    color: #999;   
 }
 </style>

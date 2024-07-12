@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { message } from 'ant-design-vue';
+
 
 const router = useRouter()
 const props = defineProps<{ item: any, noClick?: boolean }>();
@@ -9,6 +11,8 @@ function getStatusText(status: string) {
 function toDetali() {
     if (!props.noClick) {
         router.push(props.item.path)
+    } else {
+        message.info("比赛尚未开始")
     }
 }
 </script>
