@@ -21,7 +21,8 @@ import isBetween from 'dayjs/esm/plugin/isBetween' // ES 2015
 import { getUserSystemLanguage, preloadAppConf } from './utils';
 import { getAllLanguage } from './lang';
 import zhCn from './lang/zh-cn.json';
-
+import { defineCustomElement } from 'vue'
+import Bilibili from './components/bilibili.ce.vue'
 
 
 dayjs.extend(isBetween);
@@ -39,6 +40,10 @@ const i18n = createI18n<[MessageSchema], "zh-cn" | "en">({
     fallbackLocale: getUserSystemLanguage(),
     messages,
 })
+// 转换为自定义元素构造器
+const BilibiliElement = defineCustomElement(Bilibili)
+// 注册
+customElements.define('mug-bilibili', BilibiliElement)
 
 const app = createApp(App)
 

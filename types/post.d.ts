@@ -1,5 +1,20 @@
 
 declare global {
+    interface PostComment {
+        id: number,
+        postId: number,
+        createdDate: string,
+        createdUserId: number,
+        content: string,
+        likeCount: number,
+        isHidden: boolean,
+        ReplyId: number,
+        relations: {
+            parentCommentId: number,
+            isLiked: boolean,
+            subCommentIds: number[]
+        }
+    }
 
     interface Post {
         commentCount: number;

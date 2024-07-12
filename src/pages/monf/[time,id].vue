@@ -1,7 +1,7 @@
 <!--  -->
 <script lang="ts" setup>
 import { getMonf, getMonfComments, monfLike, monfunLike } from '@/apis/monf';
-import BilibiliCe from '@/components/bilibili.vue';
+import BilibiliCe from '@/components/bilibili.ce.vue';
 import UseHead from '@/components/useHead.vue';
 import { useAppStore } from '@/stores/app';
 import { useUserStore } from '@/stores/users';

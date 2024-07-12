@@ -8,28 +8,48 @@ export interface PostsBody {
     };
     post: Post[];
 }
-
+export interface PostBody {
+    includes: {
+        users: User[];
+        categories: Categorie[];
+        comment: PostComment[];
+    };
+    post: Post;
+}
 export interface Pagination {
     page: string | number;
     pageSize: string | number;
 }
-export interface PostParams extends Pagination {
+export interface PostsParams extends Pagination {
     postUserId?: number | string;
     sort?: string | number;
     content?: string;
     categorieId?: string | number;
 }
 
+export interface PostParams extends Pagination {
+    sortField?: "createdDate" | "likeCount",
+    sortType?: "asc" | "desc",
+    content?: string,
+}
 
 
 
-export function getPosts(params: PostParams) {
+export function getPosts(params: PostsParams) {
     return request.Get<InstanceBody<PostsBody>>(`post`, {
         params,
         name: "getPosts"
     })
 }
-
+// 获取帖子详情
+export function getPost(id: string | number, params?: PostParams) {
+    return request.Get<InstanceBody<PostBody>>(`post/${id}`, {
+        params,
+        name: "getPost",
+    }).send(true)
+}
+// 帖子列表和帖子详情共享一个配置
+export const getPostComments = getPost;
 
 
 /**
@@ -48,16 +68,6 @@ export async function postLike(id: Post["id"], cancel?: boolean) {
 
 
 
-export interface PostBody {
-    post: Post;
-    includes: {
-        categories: Categorie[];
-        comments: Comment[];
-        users: User[];
-        // monfVoteInfos?: MonfVote[];
-        // monfVoteDetails?: MonfVoteDetail[];
-    };
-}
 
 export interface setPostParams {
     title: string;

@@ -1,5 +1,8 @@
 <template>
-    <iframe class="bilibili" :src="src" >
+    <iframe class="bilibili" :src="src" style="  width: 100%;
+    height: 400px;
+    max-width: 100vw;
+    margin: 0 auto;">
     </iframe>
 </template>
 
@@ -22,10 +25,5 @@ const src = computed(() => {
 })
 </script>
 <style scoped lang="less">
-.bilibili {
-    width: 100%;
-    height: 400px;
-    max-width: 100vw;
-    margin: 0 auto;
-}
+.bilibili {}
 </style>

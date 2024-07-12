@@ -1,12 +1,11 @@
 import request from "@/utils/request";
-import type { PostParams } from "./post";
 
 
 export interface MonfApplyBody {
     work: Monf,
     includes: {
         users: User[]
-        comments?: Comment[]
+        comments?: MonfComment[]
         categories?: Categorie[]
     }
 }
@@ -31,7 +30,7 @@ interface MonfListBody {
     works: Monf[],
     includes: {
         users: User[]
-        workComments?: Comment[]
+        workComments?: MonfComment[]
         categories?: Categorie[]
     }
 }
@@ -40,7 +39,7 @@ interface MonfBody {
     work: Monf,
     includes: {
         users: User[]
-        workComments?: Comment[]
+        workComments?: MonfComment[]
     }
 }
 export interface MonfsParams {
