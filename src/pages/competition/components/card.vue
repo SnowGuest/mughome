@@ -21,7 +21,8 @@ function toDetali() {
                 {{ getStatusText(item.status) }}
             </p>
             <p class="card-title">{{ item.title }}</p>
-            <p class="endDate">截稿日期: {{ item.endDate }}</p>
+            <p class="endDate" v-if="item.status === 'noStart'">开始日期: {{ item.startTime }}</p>
+            <p class="endDate" v-else>截稿日期: {{ item.endDate }}</p>
         </div>
         <div class="card-footer mt-a">
             <a-avatar></a-avatar>
