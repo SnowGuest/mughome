@@ -1,9 +1,10 @@
 <template>
-    <iframe class="bilibili" :src="src" style="  width: 100%;
+    <!-- <iframe class="bilibili" :src="src" style="  width: 100%;
     height: 400px;
     max-width: 100vw;
     margin: 0 auto;">
-    </iframe>
+    </iframe> -->
+    渲染{{ src }}
 </template>
 
 <script lang="ts" setup>

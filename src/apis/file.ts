@@ -16,10 +16,7 @@ export interface FileBody {
 export function uploaderFile(file: File) {
     const fd = new FormData()
     fd.append("file", file)
-    return request.Post<InstanceBody<FileBody>>("/upload/file", {
-        data: fd,
-
-    }, {
+    return request.Post<InstanceBody<FileBody>>("/upload/file", file, {
         meta: {
             requiredLogin: true,
         }

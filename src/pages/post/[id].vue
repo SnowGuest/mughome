@@ -11,29 +11,29 @@ const router = useRouter()
 const post = ref<Post>();
 const userStore = useUserStore();
 const loading = ref(true);
-const showCatalog = ref(false); // 是否显示
-const markDownState = reactive({
-    id: "preview-md"
-})
+const categories = ref<Categorie[]>([])
 async function loadPost(id: string) {
     try {
         const result = await getPost(id);
         userStore.setUsers(result.data.includes.users);
-        post.value = result.data.post
+        post.value = result.data.post;
+        categories.value = result.data.includes.categories
     } finally {
         loading.value = false
     }
 
 }
 const sanitize = (html: string) => {
-    html = html.replace(`&lt;mug-bilibili`, `<mug-bilibili`).replace(`&gt;&lt;/mug-bilibili&gt;`, `></mug-bilibili>`)
-    console.log(html)
+
+    html = html.replace(`&lt;mug-bilibili`, `<mug-bilibili`).replace(`&gt;&lt;/mug-bilibili&gt;`, `></mug-bilibili>`).replace(`<bilibili`,`<mug-bilibili`).replace(`</bilibili>`,`</mug-bilibili>`)
+
+    // console.log(html)
 
     const newhtml = sanitizeHtml(html, {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['mug-bilibili']),
         allowedAttributes: { ...sanitizeHtml.defaults.allowedAttributes, "mug-bilibili": ["bvid"] }
     });
-    console.log(newhtml, 'xxx')
+    // console.log(newhtml, 'xxx')
     return newhtml
 }
 
@@ -55,12 +55,14 @@ if (typeof route.params.id === "string") {
     <div class="container" v-if="!loading && post">
         <div class="container-body">
             <UseHead padding="0 0 20px 0" :createdUserId="post.createdUserId" />
-            <MdPreview class="articleContent" :model-value="post.content" preview preview-only :sanitize="sanitize" />
+            <MdPreview :model-value="post.content" preview preview-only :sanitize="sanitize" />
+            <div class="footerTags">
+                <a-tag color="orange" v-for="item in categories">{{ item.name }}</a-tag>
+
+            </div>
         </div>
         <comments v-model="post" />
     </div>
-
-
 </template>
 
 <style scoped lang="less">
@@ -84,7 +86,6 @@ if (typeof route.params.id === "string") {
 }
 
 .container {
-    padding: 0 14px;
     margin: 0 auto;
 
     .title {
@@ -111,6 +112,8 @@ if (typeof route.params.id === "string") {
         max-width: 100%;
         width: 690px;
         margin: 0 auto;
+        background-color: #ffffff;
+        padding: 14px 16px;
     }
 
 

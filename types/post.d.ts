@@ -12,6 +12,7 @@ declare global {
         relations: {
             parentCommentId: number,
             isLiked: boolean,
+            // subComments: PostComment[];
             subCommentIds: number[]
         }
     }

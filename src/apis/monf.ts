@@ -126,9 +126,7 @@ export function cutOffTicketAPI(workCommentId: string | number, reason: string) 
 
 // monf更新评论
 export function monfCommentUpdate(workCommentId: string | number, params: MonfCommentParams) {
-    return request.Patch<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/${workCommentId}`, {
-        params
-    }).send(true)
+    return request.Patch<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/${workCommentId}`, params).send(true)
 }
 export interface MonfCommentParams {
     workId: number | string,
@@ -138,9 +136,7 @@ export interface MonfCommentParams {
 }
 // monf评论
 export function monfComment(params: MonfCommentParams) {
-    return request.Post<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/publish`, {
-        params
-    }).send(true)
+    return request.Post<InstanceBody<CutOffTicketBody>>(`/event/monf/comment/publish`, params).send(true)
 }
 
 // monf取消点赞
@@ -155,9 +151,8 @@ export function monfCommentLike(monfWorkCommentId: string | number) {
 }
 
 // monf发布
-export function monfPublish(body: MonfPublishParams) {
-    return request.Post<InstanceBody<MonfBody>>(`event/monf/work/publish`, {
+export function monfPublish(params: MonfPublishParams) {
+    return request.Post<InstanceBody<MonfBody>>(`event/monf/work/publish`, params, {
         hitSource: ["getMonfs"],
-        body
     }).send(true)
 }

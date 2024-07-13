@@ -176,6 +176,7 @@ async function commmentLike(item: MonfComment) {
         font-size: 12px;
         color: #aaa;
         display: block;
+        margin-left: auto;
     }
 }
 
@@ -215,16 +216,16 @@ async function commmentLike(item: MonfComment) {
     justify-content: center;
     border-radius: 50px;
     width: 50px;
-    height: 28px;
+    height: 24px;
     margin-right: 10px;
     background-color: #ddd;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 14px;
     cursor: pointer;
     color: #5A5A5A;
 
     i {
-        font-size: 14px;
+        font-size: 10px;
         margin-right: 6px;
     }
 }
