@@ -1,11 +1,14 @@
 <template>
     <li class="comment flex" :key="comment.id"
         v-if="comment && !comment.isHidden && isChild ? true : commentIds?.has(comment.id)">
-        <div>
-            <a-avatar :src="userMap.get(comment.createdUserId)?.avatarUrl" :size="isChild ? 25 : 45"></a-avatar>
+        <div :class="{isChildAvatar:isChild}">
+            <a-avatar  :src="userMap.get(comment.createdUserId)?.avatarUrl" :size="isChild ? 25 : 45"></a-avatar>
         </div>
         <div class="commentBody flex-1">
-            <div class="commentNickname">{{ userMap.get(comment.createdUserId)?.nickName }}</div>
+            <div class="commentNickname">{{ userMap.get(comment.createdUserId)?.nickName }}
+                <a-tag v-if="post" color="blue" v-show="comment.createdUserId !== post.id">作者</a-tag>
+
+            </div>
             <div class="commentBio">{{ userMap.get(comment.createdUserId)?.bio }}</div>
 
             <div class="commentContent">{{ comment.content }}</div>
@@ -23,7 +26,7 @@
     </li>
     <ul class="child" v-if="Array.isArray(comment.relations?.subCommentIds) && !isChild">
         <!-- {{ Array.isArray(childComment) }} -->
-        <postCommentCard :comment="item" isChild v-for="item in childComment" :key="item.id">
+        <postCommentCard :comment="item" isChild v-for="item in childComment" :key="item.id" :post="post">
         </postCommentCard>
     </ul>
 </template>
@@ -44,7 +47,8 @@ const props = defineProps<{
     comment: PostComment,
     commentIds?: Set<number>,
     commentChildMap?: Map<PostComment["id"], PostComment>,
-    isChild?: boolean
+    isChild?: boolean,
+    post?: Post
 }>();
 const childComment = computed<PostComment[]>(e => {
     if (props.isChild) return [];
@@ -155,5 +159,8 @@ async function commmentLike(item: PostComment) {
 
 .child {
     padding-left: 50px;
+}
+.isChildAvatar{
+    padding-top: 4px;
 }
 </style>

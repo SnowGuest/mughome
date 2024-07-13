@@ -15,20 +15,20 @@
             </div>
             <ul class="commentCard flex flex-col">
                 <comment v-for="(item, index) in data" :key="item.id" :comment="item" :commentIds="commentIds"
-                    :commentChildMap="commentChildMap">
+                    :commentChildMap="commentChildMap" :post="post">
                 </comment>
                 <div class="zeroComment" v-if="data.length <= 0 && !loading && isLastPage">
                     <a-empty description="暂无评论" />
                 </div>
             </ul>
         </div>
-
+        <loadingVue v-if="!initLoading" @load="page++" v-show="!isLastPage"></loadingVue>
     </div>
-    <CommentModal ref="commentModalInst" :postId="post?.id" />
+    <CommentModal ref="commentModalInst" :postId="post?.id"  />
 </template>
 
 <script lang="ts" setup>
-
+import loadingVue from "@/components/loading.vue";
 import comment from "./postCommentCard.vue"
 import { getPostComments, postLike, postCommentLike, PostBody } from '@/apis/post';
 import { useUserStore } from '@/stores/users';
