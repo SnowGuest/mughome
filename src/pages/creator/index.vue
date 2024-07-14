@@ -224,7 +224,7 @@ async function sendPost() {
     const hide = message.loading("发布中", 0)
     try {
         const result = await setPost(body);
-        post.value = result
+        post.value = result.data;
         // closeToast(true);
         confetti({
             angle: randomInRange(100, 120),

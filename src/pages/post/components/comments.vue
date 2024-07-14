@@ -31,7 +31,7 @@
 <script lang="ts" setup>
 import loadingVue from "@/components/loading.vue";
 import comment from "./postCommentCard.vue"
-import { getPostComments, postLike, postCommentLike, PostBody } from '@/apis/post';
+import { getPostComments, postLike, postCommentLike, type PostBody } from '@/apis/post';
 import { useUserStore } from '@/stores/users';
 import { useAppStore } from '@/stores/app';
 import { message } from 'ant-design-vue';
