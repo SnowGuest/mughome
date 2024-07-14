@@ -58,7 +58,6 @@ if (typeof route.params.id === "string") {
             <MdPreview :model-value="post.content" preview preview-only :sanitize="sanitize" />
             <div class="footerTags">
                 <a-tag color="orange" v-for="item in categories">{{ item.name }}</a-tag>
-
             </div>
         </div>
         <comments v-model="post" />

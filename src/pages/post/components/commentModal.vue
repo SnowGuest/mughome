@@ -26,8 +26,9 @@ async function submit() {
     message.success("评论成功");
     userStore.setUsers(result.data.includes.users)
     open.value = false;
-    content.value = ""
-    postCommentProvide?.addComment(result.data.comment)
+    content.value = "";
+    postCommentProvide?.addComment(result.data.comment, comment.value)
+
     console.log(comment.value, '上一条实例')
 }
 </script>

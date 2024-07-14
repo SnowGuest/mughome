@@ -1,35 +1,4 @@
-<template>
-    <li class="comment flex" :key="comment.id"
-        v-if="comment && !comment.isHidden && isChild ? true : commentIds?.has(comment.id)">
-        <div :class="{isChildAvatar:isChild}">
-            <a-avatar  :src="userMap.get(comment.createdUserId)?.avatarUrl" :size="isChild ? 25 : 45"></a-avatar>
-        </div>
-        <div class="commentBody flex-1">
-            <div class="commentNickname">{{ userMap.get(comment.createdUserId)?.nickName }}
-                <a-tag v-if="post" color="blue" v-show="comment.createdUserId !== post.id">作者</a-tag>
 
-            </div>
-            <div class="commentBio">{{ userMap.get(comment.createdUserId)?.bio }}</div>
-
-            <div class="commentContent">{{ comment.content }}</div>
-            <div class="commentControl flex items-center" :id="`commentControl${comment.id}`">
-                <div v-if="!appStore.isSelf(comment.createdUserId)" class="comment-control control-like"
-                    :class="{ like: comment.relations?.isLiked }"
-                    @click.stop="comment?.relations?.isLiked ? unCommentLike(comment) : commmentLike(comment)">
-                    <i class="bi bi-heart-fill"></i>
-                    {{ comment.likeCount }}
-                </div>
-                <a-button v-if="!isChild" type="link" @click="backComment(comment)">回复</a-button>
-                <time class="time">发布于 {{ getCreateTime(comment.createdDate) }}</time>
-            </div>
-        </div>
-    </li>
-    <ul class="child" v-if="Array.isArray(comment.relations?.subCommentIds) && !isChild">
-        <!-- {{ Array.isArray(childComment) }} -->
-        <postCommentCard :comment="item" isChild v-for="item in childComment" :key="item.id" :post="post">
-        </postCommentCard>
-    </ul>
-</template>
 
 <script lang="ts" setup>
 import { postCommentLike } from '@/apis/post';
@@ -52,7 +21,7 @@ const props = defineProps<{
 }>();
 const childComment = computed<PostComment[]>(e => {
     if (props.isChild) return [];
-    return props.comment.relations?.subCommentIds.map(e => {
+    return props.comment.relations?.subCommentIds?.map(e => {
         return props.commentChildMap?.get(e)
     }).filter(e => e) as PostComment[]
 })
@@ -85,6 +54,41 @@ async function commmentLike(item: PostComment) {
     message.success("点赞成功")
 }
 </script>
+
+
+<template>
+    <li class="comment flex" :key="comment.id"
+        v-if="comment && !comment.isHidden && isChild ? true : commentIds?.has(comment.id)">
+        <div :class="{ isChildAvatar: isChild }">
+            <a-avatar :src="userMap.get(comment.createdUserId)?.avatarUrl" :size="isChild ? 25 : 45"></a-avatar>
+        </div>
+        <div class="commentBody flex-1">
+            <div class="commentNickname">{{ userMap.get(comment.createdUserId)?.nickName }}
+                <a-tag v-if="post" color="blue" v-show="comment.createdUserId === post.id">作者</a-tag>
+
+            </div>
+            <div class="commentBio">{{ userMap.get(comment.createdUserId)?.bio }}</div>
+
+            <div class="commentContent">{{ comment.content }}</div>
+            <div class="commentControl flex items-center" :id="`commentControl${comment.id}`">
+                <div v-if="!appStore.isSelf(comment.createdUserId)" class="comment-control control-like"
+                    :class="{ like: comment.relations?.isLiked }"
+                    @click.stop="comment?.relations?.isLiked ? unCommentLike(comment) : commmentLike(comment)">
+                    <i class="bi bi-heart-fill"></i>
+                    {{ comment.likeCount }}
+                </div>
+                <a-button v-if="!isChild" type="link" @click="backComment(comment)">回复</a-button>
+                <time class="time">发布于 {{ getCreateTime(comment.createdDate) }}</time>
+            </div>
+        </div>
+    </li>
+    <ul class="child" v-if="Array.isArray(comment.relations?.subCommentIds) && !isChild">
+        <!-- {{ Array.isArray(childComment) }} -->
+        <postCommentCard :comment="item" isChild v-for="item in childComment" :key="item.id" :post="post">
+        </postCommentCard>
+    </ul>
+</template>
+
 <style lang="less" scoped>
 .comment {
     padding: 0 16px;
@@ -160,7 +164,8 @@ async function commmentLike(item: PostComment) {
 .child {
     padding-left: 50px;
 }
-.isChildAvatar{
+
+.isChildAvatar {
     padding-top: 4px;
 }
 </style>

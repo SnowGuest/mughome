@@ -1,4 +1,5 @@
 <template>
+    <!-- <a href="#comments" style="pointer-events: none;" id="comments"></a> -->
     <div class="comments container" v-if="!loading && post">
 
         <div class="container-body">
@@ -8,7 +9,7 @@
                     <i class="bi bi-heart-fill"></i>
                     {{ post.likeCount }}
                 </div>
-                <div class="control" @click="postComment.showCommentModel">
+                <div class="control" @click="postComment.showCommentModel()">
                     <i class="bi bi-chat-dots-fill"></i>
                     {{ post.commentCount }}
                 </div>
@@ -24,7 +25,7 @@
         </div>
         <loadingVue v-if="!initLoading" @load="page++" v-show="!isLastPage"></loadingVue>
     </div>
-    <CommentModal ref="commentModalInst" :postId="post?.id"  />
+    <CommentModal ref="commentModalInst" :postId="post?.id" />
 </template>
 
 <script lang="ts" setup>
@@ -42,8 +43,19 @@ const postComment = {
     showCommentModel(e?: PostComment) {
         commentModalInst.value?.open(e)
     },
-    addComment(e: PostComment) {
-        insert(e)
+    async addComment(e: PostComment, topComment: PostComment) {
+        console.log(e, topComment)
+        if (!topComment) {
+            console.log("插入")
+            insert(e, 0);
+            return
+        }
+        else {
+            commentChildMap.value.set(e.id, e);
+            await nextTick();
+            if (!topComment.relations) topComment.relations = { subCommentIds: [] }
+            topComment.relations.subCommentIds?.push(e.id);
+        }
     },
 }
 provide("postComment", postComment)
@@ -73,7 +85,8 @@ const {
     (page, pageSize) => getPostComments(postId, { page, pageSize }),
     {
         data: (response: InstanceBody<PostBody>) => {
-            initLoading.value = false
+            initLoading.value = false;
+            console.log(response.data, '我是？？')
             userStore.setUsers(response.data.includes.users);
             response.data.post.relations.commentIds.forEach((e: number) => commentIds.value.add(e))
             response.data.includes.comments.forEach((e: PostComment) => {
@@ -84,7 +97,7 @@ const {
                     })
                 }
             });
-            return response.data.includes.comments
+            return response.data.includes.comments.filter(e => !e.relations || e.relations.subCommentIds)
         },
         append: true,
         immediate: true,

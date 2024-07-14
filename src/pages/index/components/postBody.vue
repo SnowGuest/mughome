@@ -4,29 +4,25 @@ import { LazyImg } from 'vue-waterfall-plugin-next'
 const router = useRouter()
 defineProps<{ item: Post, url?: string }>();
 
-function toDetali(post: Post, target = "") {
-    router.push({
-        path: `/post/${post.id}${target}`
-    })
-}
+
 
 </script>
 <!-- @click="item.relations.isLiked ? unLike(item) : like(item)" -->
 <template>
     <div class="post-body">
-        <div class="post-title" @click="toDetali(item)">{{ item.title }}</div>
+        <router-link :to="`/post/${item.id}`" class="post-title">{{ item.title }}</router-link>
         <LazyImg v-if="url" :url="url" />
         <!-- <img v-if="item.headerImage" :src="item.headerImage" alt="" @click="toDetali(item)" /> -->
     </div>
     <div class="post-footer flex items-baseline mt-a">
-        <div class="control control-like" :class="{ like: item.relations.isLiked }" @click="toDetali(item)">
+        <router-link  :to="`/post/${item.id}`" class="control control-like" :class="{ like: item.relations.isLiked }">
             <i class="bi bi-heart-fill"></i>
             {{ item.likeCount }}
-        </div>
-        <div class="control" @click="toDetali(item, '#comment')">
+        </router-link>
+        <router-link class="control" :to="`/post/${item.id}#comments`">
             <i class="bi bi-chat-dots-fill"></i>
             {{ item.commentCount }}
-        </div>
+        </router-link>
         <span class="viewText ml-a">浏览 {{ item.viewCount }}</span>
     </div>
 </template>
@@ -60,6 +56,7 @@ function toDetali(post: Post, target = "") {
         font-weight: bold;
         cursor: pointer;
         margin-bottom: 12px;
+        display: block;
     }
 
     &-footer {
@@ -85,6 +82,7 @@ function toDetali(post: Post, target = "") {
     margin-right: 14px;
     color: #5A5A5A;
     cursor: pointer;
+
     i {
         font-size: 14px;
         margin-right: 6px;

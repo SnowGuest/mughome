@@ -10,10 +10,10 @@ declare global {
         isHidden: boolean,
         ReplyId: number,
         relations: {
-            parentCommentId: number,
-            isLiked: boolean,
+            parentCommentId?: number,
+            isLiked?: boolean,
             // subComments: PostComment[];
-            subCommentIds: number[]
+            subCommentIds?: number[]
         }
     }
 

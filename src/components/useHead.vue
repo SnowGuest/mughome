@@ -29,7 +29,7 @@ async function subscribed(userId?: User["id"], bool?: boolean) {
         <div class="mr-a">
             <div class="nickName">{{ user.nickName }}</div>
         </div>
-        <a-button v-if="user.relations?.isSubscribed" @click="subscribed(user?.id, false)">取消关注</a-button>
+        <a-button class="follow" v-if="user.relations?.isSubscribed" @click="subscribed(user?.id, false)">取消关注</a-button>
         <a-button class="follow" v-else @click="subscribed(user?.id, true)">关注</a-button>
 
     </div>
