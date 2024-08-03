@@ -25,8 +25,16 @@ const router = createRouter({
     path: "/search",
     component: () => import("@/pages/search/index.vue")
   }, {
-    path: "/account/signin",
-    component: () => import("@/pages/account/signin.vue")
+    path: "/account",
+    component: () => import("@/pages/account/index.vue"),
+    redirect: "signin",
+    children: [{
+      path: "signin",
+      component: () => import("@/pages/account/signin.vue")
+    }, {
+      path: "signup",
+      component: () => import("@/pages/account/signup.vue")
+    }],
   },
 
 
