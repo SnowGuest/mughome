@@ -48,7 +48,7 @@ defineExpose({
 </script>
 
 <template>
-    <a-modal v-model:open="open" title="修改邮箱" ref="formInst" @ok="formInst?.validate">
+    <a-modal v-model:open="open" title="修改邮箱" ref="formInst" @ok="formInst?.validate()">
         <a-form :model="form" @finish="submitData">
             <a-form-item name="email" label="邮箱">
                 <div> {{ form.email }}</div>

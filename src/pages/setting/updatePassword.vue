@@ -22,7 +22,7 @@ defineExpose({
 </script>
 
 <template>
-    <a-modal v-model:open="open" title="修改密码" ref="formInst" @ok="formInst?.validate">
+    <a-modal v-model:open="open" title="修改密码" ref="formInst" @ok="formInst?.validate()">
         <a-form :model="form" @finish="submitData">
             <a-form-item name="oldPassword" label="旧密码">
                 <a-input v-model="form.oldPassword"></a-input>

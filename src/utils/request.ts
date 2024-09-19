@@ -38,6 +38,7 @@ const { onAuthRequired, onResponseRefreshToken } = createClientTokenAuthenticati
         }
     }
 });
+console.log(fetchAdapter)
 const alovaInstance = createAlova({
     requestAdapter: fetchAdapter(),
     statesHook: VueHook,
