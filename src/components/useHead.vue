@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia"
 import { useUserStore } from '@/stores/users';
 import { followUserApi, getUser, unfollowUserApi } from '@/apis/user';
 import { message } from 'ant-design-vue';
+import userAvatar from "./userAvatar.vue";
 const props = defineProps<{
     createdUserId: number;
     padding?: string;
@@ -25,7 +26,8 @@ async function subscribed(userId?: User["id"], bool?: boolean) {
 
 <template>
     <div v-if="user" class="useHead flex items-center" :style="padding ? { padding } : {}">
-        <a-avatar :src="user.avatarUrl" :size="48" class="avatar" />
+        <!-- <a-avatar :src="user.avatarUrl" :size="48" class="avatar" /> -->
+        <userAvatar :created-user-id="user.id" style="margin-right:10px" />
         <div class="mr-a">
             <div class="nickName">{{ user.nickName }}</div>
         </div>

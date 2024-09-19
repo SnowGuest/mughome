@@ -91,3 +91,18 @@ export function requestError2Message<T extends (number | string | Record<string,
     }
     return reqBody.data
 }
+
+
+
+/* 通过文本生成颜色 */
+export function getColor(value: string) {
+    return "#" + getHashCode(`${value}`).toString(16).substr(0, 6)
+}
+function getHashCode(str: string) {
+    var hash = 1315423911, i, ch;
+    for (i = str.length - 1; i >= 0; i--) {
+        ch = str.charCodeAt(i);
+        hash ^= ((hash << 5) + ch + (hash >> 2));
+    }
+    return (hash & 0x7FFFFFFF);
+}

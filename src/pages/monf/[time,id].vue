@@ -48,11 +48,10 @@ if (typeof route.params.id === "string") {
 
 
 
-
 </script>
 
 <template>
-    <a-page-header title="返回" @back=" $router.back" class="pageHeader" />
+    <a-page-header title="返回" @back="router.back" class="pageHeader" />
 
     <div class="skeleton" v-show="loading">
         <a-skeleton active />
@@ -77,11 +76,17 @@ if (typeof route.params.id === "string") {
                 <a-tag color="blue">音乐总分：{{ monf.musicScoreTotal }}</a-tag>
             </div>
         </div>
+
     </div>
-    <comments v-model="monf" />
+    <div class="footer flex justify-center">
+        <comments v-model="monf" />
+    </div>
 </template>
 
 <style scoped lang="less">
+.footer{
+    background-color: #fff;
+}
 .pageHeader {
     position: sticky;
     top: 0;

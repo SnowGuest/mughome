@@ -19,7 +19,9 @@
             <ul class="commentCard flex flex-col">
                 <li v-for="(item, index) in data" class="comment flex" :key="item.id">
                     <div>
-                        <a-avatar :src="userMap.get(item.createdUserId)?.avatarUrl" :size="45"></a-avatar>
+                        <userAvatar  :created-user-id="item.createdUserId" />
+                        <!-- <UseHead :created-user-id="item.createdUserId" /> -->
+                        <!-- <a-avatar :src="userMap.get(item.createdUserId)?.avatarUrl" :size="45"></a-avatar> -->
                     </div>
                     <div class="commentBody flex-1">
                         <div class="commentNickname">{{ userMap.get(item.createdUserId)?.nickName }}</div>
@@ -58,7 +60,7 @@ import CommentVote from './commentVote.vue';
 import { useAppStore } from '@/stores/app';
 import { message } from 'ant-design-vue';
 import { useCompetition, type Competition } from '@/stores/competition';
-
+import userAvatar from "@/components/userAvatar.vue"
 import CommentModal from './commentModal.vue';
 const commentModalInst = ref<{ open: () => void }>()
 const monf = defineModel<Monf>()

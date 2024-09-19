@@ -1,13 +1,16 @@
 <template>
     <div class="flex between" style="align-items: flex-end;">
+
         <div class="CommentVote" v-if="vote" :class="{ CommentVoteSlashed: getSlashed() }">
             <h4 style="width:100%">作品评价</h4>
-            <span style="white-space: nowrap;">
-                <span>谱面评分:</span>
-                <span style="font-size:22px; margin-right: 24px;"> {{ vote.chartScore ?? "无" }}</span>
-            </span>
-            <span>音乐评分:</span>
-            <span style="font-size:22px;"> {{ vote.musicScore ?? "无" }}</span>
+            <div class="flex CommentVoteContent">
+                <span style="white-space: nowrap;">
+                    <span>谱面评分:</span>
+                    <span style="font-size:22px; margin-right: 24px;"> {{ vote.chartScore ?? "无" }}</span>
+                </span>
+                <span>音乐评分:</span>
+                <span style="font-size:22px;"> {{ vote.musicScore ?? "无" }}</span>
+            </div>
             <div class="CommentVoteShash" v-if="getSlashed()">
                 削票原因:{{ vote.slashReason || "无" }}
             </div>
@@ -69,24 +72,41 @@ async function cutOffTicket() {
         min-width: 260px;
     }
 }
-.dropdown{
+.CommentVoteContent{
+    display: flex;
+    align-items: baseline;
+    span{
+        white-space: nowrap;
+    }
+}
+.dropdown {
     align-self: flex-start;
     margin-top: 14px;
     padding: 6px;
     transform: translateX(-100%);
 }
+.CommentVoteShash{
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #212121;
+    // width: 40%;
+    max-width: 200px;
+}
+
 .CommentVote {
     display: flex;
+    flex-direction:  column;
     padding: 10px 14px;
     font-size: 16px;
     border-radius: 8px;
     // border: 1px solid var(--mug-dividing);  
-    flex-wrap: wrap;
-    width: 40%;
+    // flex-wrap: wrap;
+    // min-width: 40%;
     background-color: #EDF6FD;
     border: 1px solid rgba(199, 223, 251, 1);
     color: var(--mug-text);
-    align-items: center;
+    // align-items: center;
     margin-top: 14px;
 }
 
